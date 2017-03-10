@@ -2,9 +2,6 @@ package com.empsoft.safe_meal.services.retrofit_models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Caynan on 3/1/17.
- */
 
 public class ComplexSearchMapper {
 

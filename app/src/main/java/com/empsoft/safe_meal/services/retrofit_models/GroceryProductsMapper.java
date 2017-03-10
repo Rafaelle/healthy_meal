@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by caynan on 14/02/17.
- */
 
 public class GroceryProductsMapper {
 

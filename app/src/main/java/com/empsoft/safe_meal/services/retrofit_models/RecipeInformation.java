@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by caynan on 17/02/17.
- */
 public class RecipeInformation {
 
     @SerializedName("vegetarian")

@@ -2,9 +2,7 @@ package com.empsoft.safe_meal.services.retrofit_models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by caynan on 17/02/17.
- */
+
 public class RecipeInformationMapper {
 
     @SerializedName("id")

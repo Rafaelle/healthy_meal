@@ -15,10 +15,6 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by caynan on 17/02/17.
- */
-
 public class SpoonacularService {
     private String MASHAPE_KEY = "";
 

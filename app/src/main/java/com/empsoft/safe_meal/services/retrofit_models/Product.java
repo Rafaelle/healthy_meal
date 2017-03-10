@@ -2,9 +2,6 @@ package com.empsoft.safe_meal.services.retrofit_models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by caynan on 14/02/17.
- */
 public class Product {
 
     @SerializedName("id")
