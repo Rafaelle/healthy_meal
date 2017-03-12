@@ -75,14 +75,14 @@ public class ComplexSearchMapper {
     public ComplexSearchMapper() {
     }
 
-    public ComplexSearchMapper(String cuisine, String diet, String includeIngredients, String intolerances,
-                               Integer number, String query, Integer ranking, String type) {
+    public ComplexSearchMapper(String cuisine, String diet, String intolerances,
+                               Integer number, String query, String type) {
         this.addRecipeInformation = false;
         this.cuisine = cuisine;
         this.diet = diet;
         this.excludeIngredients = null;
         this.fillIngredients = false;
-        this.includeIngredients = includeIngredients;
+        this.includeIngredients = null;
         this.instructionsRequired = false;
         this.intolerances = intolerances;
         this.limitLicense = false;
@@ -97,7 +97,7 @@ public class ComplexSearchMapper {
         this.number = number;
         this.offset = 0;
         this.query = query;
-        this.ranking = ranking;
+        this.ranking = 2;
         this.type = type;
 
     }
