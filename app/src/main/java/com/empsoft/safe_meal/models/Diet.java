@@ -1,4 +1,4 @@
-package com.empsoft.safe_meal;
+package com.empsoft.safe_meal.models;
 
 import java.util.Set;
 
