@@ -8,17 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
+import com.empsoft.safe_meal.fragments.SelectFiltersFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MAIN_ACTIVITY";
     private ProfilesFragment mProfilesFragment;
+    private SelectFiltersFragment selectFiltersFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mProfilesFragment = ProfilesFragment.getInstance();
+        selectFiltersFragment = SelectFiltersFragment.getInstance();
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, false);
     }
 
