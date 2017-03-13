@@ -22,7 +22,7 @@
         android:drawableRight="@drawable/checkbox_ck_icon"
         android:background="@drawable/bg_checkbox_filter"
         android:textColor="@drawable/checkbox_text_color"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:text=""
         android:button="@null"
         />

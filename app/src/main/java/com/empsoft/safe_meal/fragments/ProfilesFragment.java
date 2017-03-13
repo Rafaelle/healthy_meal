@@ -95,7 +95,7 @@ public class ProfilesFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.next_button) {
-            ((MainActivity) this.getActivity()).changeFragment(SelectFiltersFragment.getInstance(), SelectFiltersFragment.TAG, false);
+            ((MainActivity) this.getActivity()).changeFragment(SelectFiltersFragment.getInstance(), SelectFiltersFragment.TAG, true);
             return true;
         }
 

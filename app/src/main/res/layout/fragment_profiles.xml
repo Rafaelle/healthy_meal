@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.empsoft.safe_meal.fragments.ProfilesFragment">
+    tools:context="com.empsoft.safe_meal.fragments.ProfilesFragment"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,7 +33,9 @@
                 android:id="@+id/profile_grid_view"
                 android:numColumns="2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
             </GridView>
         </LinearLayout>

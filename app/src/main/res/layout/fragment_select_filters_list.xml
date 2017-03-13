@@ -2,22 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:alpha="0.9"
-        android:layout_height="470dp"
+        android:layout_height="450dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
         <TextView
             android:id="@+id/filter_tv"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="20dp"
             android:text="Select filters"
             android:padding="10dp"/>
         <LinearLayout
@@ -25,7 +23,7 @@
             android:layout_below="@+id/filter_tv"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="4700dp">
+            android:layout_height="450dp">
             <GridView
                 android:id="@+id/filter_list"
                 android:layout_width="match_parent"

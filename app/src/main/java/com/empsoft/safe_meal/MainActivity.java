@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
 import com.empsoft.safe_meal.fragments.SelectFiltersFragment;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mProfilesFragment = ProfilesFragment.getInstance();
         selectFiltersFragment = SelectFiltersFragment.getInstance();
-        changeFragment(mProfilesFragment, ProfilesFragment.TAG, false);
+        changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
     }
 
 
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-
         super.onBackPressed();
     }
+
+
 }
