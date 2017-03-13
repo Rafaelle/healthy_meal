@@ -54,4 +54,16 @@ public class MainActivity extends AppCompatActivity {
             Log.w(TAG, "Unable to commit fragment, could be activity as been killed in background. " + exception.toString());
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+            return;
+        }
+
+        super.onBackPressed();
+    }
 }
