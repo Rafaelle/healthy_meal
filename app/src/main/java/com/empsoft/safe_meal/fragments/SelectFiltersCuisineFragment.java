@@ -8,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
@@ -22,17 +19,16 @@ import java.util.Arrays;
 import java.util.List;
 
 
+public class SelectFiltersCuisineFragment extends Fragment {
 
-public class SelectFiltersFragment extends Fragment {
-
-    private static SelectFiltersFragment fragment;
-    public static final String TAG = "SELECT_FILTERS_FRAGMENT";
+    private static SelectFiltersCuisineFragment fragment;
+    public static final String TAG = "SELECT_FILTERS_CUISINE_FRAGMENT";
     private List<FilterItem> filterList;
     private List<String> filterListName;
     private int[] filterListIcon;
     private List<String> selectedFilterList;
 
-    public SelectFiltersFragment() {
+    public SelectFiltersCuisineFragment() {
         // Required empty public constructor
     }
 
@@ -42,9 +38,9 @@ public class SelectFiltersFragment extends Fragment {
      *
      * @return A new instance of fragment SearchFragment.
      */
-    public static SelectFiltersFragment getInstance() {
+    public static SelectFiltersCuisineFragment getInstance() {
         if (fragment == null ){
-            fragment = new SelectFiltersFragment();
+            fragment = new SelectFiltersCuisineFragment();
             Bundle args = new Bundle();
             fragment.setArguments(args);
         }
@@ -61,18 +57,24 @@ public class SelectFiltersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_select_filters_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_select_filters_cuisine_list, container, false);
 
 
 
-        filterListName = new ArrayList<>(Arrays.asList( "Main Course", "Side Dish", "Dessert",
-                "Appetizer", "Salad", "Bread", "Breakfast", "Soup", "Beverage", "Sauce", "Drink"));
+        filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese", "Japanese", "Korean", "Vietnamese",
+                "Thai", "Indian", "British", "Irish", "French", "Italian", "Mexican", "Spanish", "Middle Eastern",
+                "Jewish", "American", "Cajun", "Southern", "Greek", "German", "Nordic", "Eastern European",
+                "Caribbean", "Latin American"));
 
-        filterListIcon = new int []{R.drawable.ic_main_course, R.drawable.ic_side_dish,
-                R.drawable.ic_dessert, R.drawable.ic_appetizer,
-                R.drawable.ic_salad, R.drawable.ic_bread, R.drawable.ic_breakfast,
-                R.drawable.ic_soup, R.drawable.ic_beverage, R.drawable.ic_sauce,
-                R.drawable.ic_drink};
+        filterListIcon = new int []{R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine};
 
         filterList = addItens(filterListName, filterListIcon);
 
@@ -85,14 +87,13 @@ public class SelectFiltersFragment extends Fragment {
         final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
         checkboxListView.setAdapter(mAdapter);
 
+        final Button prevBtn = (Button) view.findViewById(R.id.previous_to_type);
 
-        final Button nextBtn = (Button) view.findViewById(R.id.next_to_cuisine);
 
-
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).changeFragment(SelectFiltersCuisineFragment.getInstance(),SelectFiltersCuisineFragment.TAG,true );
+                ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
             }
         });
 
