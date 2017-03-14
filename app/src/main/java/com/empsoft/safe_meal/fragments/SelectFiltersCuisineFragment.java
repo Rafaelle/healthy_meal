@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 
-import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
-import com.empsoft.safe_meal.adapters.FilterListAdapter;
+import com.empsoft.safe_meal.adapters.FilterListCuisineAdapter;
 import com.empsoft.safe_meal.models.FilterItem;
 
 import java.util.ArrayList;
@@ -23,10 +22,10 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
     private static SelectFiltersCuisineFragment fragment;
     public static final String TAG = "SELECT_FILTERS_CUISINE_FRAGMENT";
-    private List<FilterItem> filterList;
+    private List<FilterItem> filterCuisineList;
     private List<String> filterListName;
     private int[] filterListIcon;
-    private List<String> selectedFilterList;
+    private List<String> selectedFilterCuisineList;
 
     public SelectFiltersCuisineFragment() {
         // Required empty public constructor
@@ -61,10 +60,15 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
 
 
-        filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese", "Japanese", "Korean", "Vietnamese",
-                "Thai", "Indian", "British", "Irish", "French", "Italian", "Mexican", "Spanish", "Middle Eastern",
-                "Jewish", "American", "Cajun", "Southern", "Greek", "German", "Nordic", "Eastern European",
-                "Caribbean", "Latin American"));
+        filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese",
+                            "Japanese", "Korean", "Vietnamese",
+                            "Thai", "Indian", "British",
+                            "Irish", "French", "Italian",
+                            "Mexican", "Spanish", "Middle Eastern",
+                            "Jewish", "American", "Cajun",
+                            "Southern", "Greek", "German",
+                            "Nordic", "Eastern European", "Caribbean",
+                            "Latin American"));
 
         filterListIcon = new int []{R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
@@ -76,26 +80,18 @@ public class SelectFiltersCuisineFragment extends Fragment {
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine};
 
-        filterList = addItens(filterListName, filterListIcon);
+        filterCuisineList = addItens(filterListName, filterListIcon);
 
-        selectedFilterList = new ArrayList<>();
+        selectedFilterCuisineList = new ArrayList<>();
 
         final Button checkAllBtn = (Button) view.findViewById(R.id.select_all_filters);
 
-        final FilterListAdapter mAdapter= new FilterListAdapter(getActivity(),filterList, selectedFilterList, checkAllBtn);
+        final FilterListCuisineAdapter mAdapter= new FilterListCuisineAdapter(getActivity(),filterCuisineList, selectedFilterCuisineList, checkAllBtn);
 
         final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
         checkboxListView.setAdapter(mAdapter);
 
-        final Button prevBtn = (Button) view.findViewById(R.id.previous_to_type);
 
-
-        prevBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
-            }
-        });
 
 
 

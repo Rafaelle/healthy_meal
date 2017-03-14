@@ -113,7 +113,7 @@ public class FilterListCuisineAdapter extends ArrayAdapter<FilterItem> {
     }
 
     public boolean allIschecked() {
-        return selectedItems.size() == 11;
+        return selectedItems.size() == 24;
     }
 
 }
