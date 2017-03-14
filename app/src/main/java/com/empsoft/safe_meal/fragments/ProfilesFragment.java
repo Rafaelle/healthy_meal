@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.empsoft.safe_meal.MainActivity;
@@ -71,18 +72,23 @@ public class ProfilesFragment extends Fragment {
         final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
         checkboxGridView.setAdapter(mAdapter);
 
+        final Button nextBtn = (Button) view.findViewById(R.id.next);
+
+
         modifyActioonBar();
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
+            }
+        });
 
 
     return view;
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.next_button_action_bar, menu);
-    }
 
     @Override
     public void onResume() {
@@ -90,17 +96,6 @@ public class ProfilesFragment extends Fragment {
         super.onResume();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.next_button) {
-            ((MainActivity) this.getActivity()).changeFragment(SelectFiltersFragment.getInstance(), SelectFiltersFragment.TAG, true);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * Inicia as definições da ActionBar para esse fragment
@@ -108,6 +103,7 @@ public class ProfilesFragment extends Fragment {
     private void modifyActioonBar() {
         android.support.v7.app.ActionBar mActionbar = ((MainActivity) this.getActivity()).getSupportActionBar();
         mActionbar.setTitle(R.string.app_name);
+        mActionbar.setElevation(0);
         mActionbar.setDisplayHomeAsUpEnabled(false);//if true displays the left menu
     }
 
