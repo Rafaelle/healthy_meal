@@ -57,5 +57,25 @@
             android:text="CHECK ALL"
             android:textColor="@android:color/white" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="false"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:padding="10dp"
+        android:gravity="right"
+        >
+
+        <ImageButton
+            android:id="@+id/search_recipes"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_search_heart_colored"
+            android:layout_marginRight="2dp"
+            android:padding="6dp"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 
 </LinearLayout>

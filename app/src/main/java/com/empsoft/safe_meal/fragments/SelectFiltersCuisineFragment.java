@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
+import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.FilterListCuisineAdapter;
 import com.empsoft.safe_meal.models.FilterItem;
@@ -97,7 +99,29 @@ public class SelectFiltersCuisineFragment extends Fragment {
         final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
         checkboxListView.setAdapter(mAdapter);
 
+        checkAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAdapter.allIschecked()){
+                    mAdapter.uncheckAll();
+                    checkAllBtn.setText("check all");
+                }else {
+                    mAdapter.checkAll();
+                    checkAllBtn.setText("uncheck all");
 
+                }
+            }
+        });
+
+        final ImageButton searchBtn = (ImageButton) view.findViewById(R.id.search_recipes);
+
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeFragment(SelectFiltersCuisineFragment.getInstance(),SelectFiltersCuisineFragment.TAG,true );
+            }
+        });
 
 
 
