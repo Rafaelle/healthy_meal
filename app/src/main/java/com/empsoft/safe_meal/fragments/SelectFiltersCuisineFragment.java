@@ -60,7 +60,7 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
 
 
-        filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese",
+      /*  filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese",
                             "Japanese", "Korean", "Vietnamese",
                             "Thai", "Indian", "British",
                             "Irish", "French", "Italian",
@@ -68,11 +68,17 @@ public class SelectFiltersCuisineFragment extends Fragment {
                             "Jewish", "American", "Cajun",
                             "Southern", "Greek", "German",
                             "Nordic", "Eastern European", "Caribbean",
-                            "Latin American"));
+                            "Latin American")); */
+        filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese",
+                "Japanese", "Korean", "Vietnamese",
+                "Thai", "Indian", "British",
+                "French", "Italian",
+                "Mexican", "Spanish", "Middle Eastern",
+                "American",
+                "Southern", "Greek", "German",
+                "Latin American"));
 
         filterListIcon = new int []{R.drawable.ic_cuisine, R.drawable.ic_cuisine,
-                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
-                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
