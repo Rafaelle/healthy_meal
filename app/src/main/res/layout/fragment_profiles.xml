@@ -1,43 +1,54 @@
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <LinearLayout
-            android:id="@+id/view_profile"
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:id="@id/icon_im"
             android:layout_width="match_parent"
-            android:elevation="5dp"
-            android:background="@drawable/preview"
-            android:layout_height="200dp"
-            android:padding="20dp">
+            android:layout_height="240dp">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/view_profile"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:elevation="5dp"
+                android:background="@drawable/preview"
+                android:layout_height="200dp"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:textColor="@android:color/white"
+                    android:text="Who's gonna eat?"/>
+
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/user_settings_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:textColor="@android:color/white"
-                android:text="Who's gonna eat?"/>
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_person_add_white"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
+            android:layout_below="@id/icon_im"
+            android:layout_above="@id/buttonPanel"
+            android:id="@+id/scrollView"
             android:orientation="vertical"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="210dp">
+            android:layout_height="wrap_content">
 
             <ScrollView
                 android:layout_width="wrap_content"
@@ -45,7 +56,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp">
+                    android:layout_height="wrap_content">
 
                     <GridView
                         android:id="@+id/profile_grid_view"
@@ -62,14 +73,15 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/buttonPanel"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:padding="10dp"
-            android:gravity="right"
-            >
+            android:gravity="right">
 
             <Button
                 android:id="@+id/next"
@@ -84,18 +96,6 @@
                 android:textColor="@android:color/white" />
         </RelativeLayout>
 
-    </LinearLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/user_settings_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:src="@drawable/ic_person_add_white"
-        app:layout_anchor="@id/view_profile"
-        app:layout_anchorGravity="bottom|right|end"/>
-
-
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
