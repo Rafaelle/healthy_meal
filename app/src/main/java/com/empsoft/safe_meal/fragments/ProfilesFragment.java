@@ -28,12 +28,9 @@ public class ProfilesFragment extends Fragment {
     private List<ProfileItem> mProfiles;
     private List<String> mSelectedProfiles;
 
-
-
     public ProfilesFragment() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -46,7 +43,6 @@ public class ProfilesFragment extends Fragment {
             Bundle args = new Bundle();
             fragment.setArguments(args);
         }
-
         return fragment;
     }
 
@@ -54,7 +50,6 @@ public class ProfilesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -63,8 +58,13 @@ public class ProfilesFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_profiles, container, false);
 
-        mProfiles = new ArrayList<>(Arrays.asList( new ProfileItem("Samir", null), new ProfileItem("Martha", null),
-                new ProfileItem("Rafaelle", null),new ProfileItem("Luiza", null),new ProfileItem("Igor", null),new ProfileItem("Khelvin", null)));
+        mProfiles = new ArrayList<>(Arrays.asList(
+                new ProfileItem("Samir", null),
+                new ProfileItem("Martha", null),
+                new ProfileItem("Rafaelle", null),
+                new ProfileItem("Luiza", null),
+                new ProfileItem("Igor", null),
+                new ProfileItem("Khelvin", null)));
 
         mSelectedProfiles = new ArrayList<>();
 
@@ -74,8 +74,6 @@ public class ProfilesFragment extends Fragment {
         checkboxGridView.setAdapter(mAdapter);
 
         final Button nextBtn = (Button) view.findViewById(R.id.next);
-
-
         modifyActioonBar();
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,19 +83,15 @@ public class ProfilesFragment extends Fragment {
                 ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
             }
         });
-
-
     return view;
 
     }
-
 
     @Override
     public void onResume() {
         modifyActioonBar();
         super.onResume();
     }
-
 
     /**
      * Inicia as definições da ActionBar para esse fragment

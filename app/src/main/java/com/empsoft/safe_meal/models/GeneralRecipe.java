@@ -12,6 +12,13 @@ public class GeneralRecipe {
     AnalyzedRecipeInstructions analyzedRecipeInstructions;
     Bitmap image;
 
+    public GeneralRecipe(Recipe recipe) {
+        this.recipe = recipe;
+        this.image = null;
+        information = null;
+        analyzedRecipeInstructions = null;
+    }
+
     public GeneralRecipe(Recipe recipe, Bitmap image) {
         this.recipe = recipe;
         this.image = image;

@@ -27,6 +27,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MAIN_ACTIVITY";
+    private static final int numberResult = 5;
     private ProfilesFragment mProfilesFragment;
     private SelectFiltersFragment selectFiltersFragment;
     private SpoonacularService spoonacularService;
@@ -95,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void complexSearch(){
-
 /*
-        String cuisine, String diet, String intolerances,
+        String cuisine, String diet, String excludeIngredients,String intolerances,
                 Integer number, String query, String type*/
-
-        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper();
+        String query = "";
+        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getDiets(), getExcludeIngredients(),
+                getIntolerances(), numberResult,query, getRecipeFilters());
         //complexSearchMapper.setLimitLicense(false);
         //complexSearchMapper.setNumber(5);
 
@@ -115,11 +116,9 @@ public class MainActivity extends AppCompatActivity {
                 for(Recipe recipe : result.getResults()){
                     Log.d("COMPLEX_SEARCH-RECIPE "+i, recipe.toString());
                     i++;
-                    //generalRecipes.add(new GeneralRecipe(recipe));
+                    generalRecipes.add(new GeneralRecipe(recipe));
                 }
-
                 changeFragment(RecipeListFragment.getInstance(), RecipeListFragment.TAG,true );
-
             }
 
             @Override
@@ -154,4 +153,104 @@ public class MainActivity extends AppCompatActivity {
     public void setRecipeFiltersSelected(List<String> recipeFiltersSelected) {
         this.recipeFiltersSelected = recipeFiltersSelected;
     }
+
+
+    private String getCuisine(){
+        String filters = "";
+        if (selectedCuisineFilters != null && selectedCuisineFilters.size() > 0){
+            for ( String str : selectedCuisineFilters){
+                filters += str + ",";
+            }
+            if (filters.endsWith(",")){
+                filters =filters.substring(0, filters.length()-1);
+            }
+
+        } else {
+            return null;
+        }
+        return filters;
+    }
+
+    private String getRecipeFilters(){
+        String filters ="";
+
+        if (recipeFiltersSelected != null && recipeFiltersSelected.size() > 0){
+            for (String string : recipeFiltersSelected) {
+                filters += string + ",";
+            }
+            if (filters.endsWith(",")){
+                filters =filters.substring(0, filters.length()-1);
+            }
+
+        } else {
+            return null;
+        }
+
+        return filters;
+    }
+
+    private String getDiets(){
+        String diets = "";
+
+        for (ProfileItem profileItem: selectedProfiles){
+            if (!profileItem.getDiet().dietToString().equals("")){
+                diets += profileItem.getDiet().dietToString() + ",";
+            }
+        }
+
+        if (diets.equals("")){
+            return null;
+        } else {
+            if (diets.endsWith(",")){
+                diets = diets.substring(0, diets.length()-1);
+            }
+        }
+
+        return diets;
+    }
+
+    private String getIntolerances(){
+        String intolerances = "";
+
+        for (ProfileItem profileItem: selectedProfiles){
+            if (!profileItem.getDiet().intoleranceToString().equals("")){
+                intolerances += profileItem.getDiet().intoleranceToString() + ",";
+            }
+        }
+
+        if (intolerances.equals("")){
+            return null;
+        } else {
+            if (intolerances.endsWith(",")){
+                intolerances = intolerances.substring(0, intolerances.length()-1);
+            }
+        }
+
+        return intolerances;
+    }
+
+
+    private String getExcludeIngredients(){
+        String excludeIngredients = "";
+
+        for (ProfileItem profileItem: selectedProfiles){
+            if (!profileItem.getDiet().excludeIngredientsToString().equals("")){
+                excludeIngredients += profileItem.getDiet().excludeIngredientsToString() + ",";
+            }
+        }
+
+        if (excludeIngredients.equals("")){
+            return null;
+        } else {
+            if (excludeIngredients.endsWith(",")){
+                excludeIngredients = excludeIngredients.substring(0, excludeIngredients.length()-1);
+            }
+        }
+
+        return excludeIngredients;
+    }
+
+
+
+
 }

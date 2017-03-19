@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="450dp"
@@ -16,7 +15,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20dp"
-            android:text="Select meal type filters"
+            android:text="@string/you_can_select_meal_type_filters"
             android:padding="10dp"/>
         <LinearLayout
             android:id="@+id/filter_layout"
