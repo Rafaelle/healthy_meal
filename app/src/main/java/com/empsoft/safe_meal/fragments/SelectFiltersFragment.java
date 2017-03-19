@@ -2,6 +2,8 @@ package com.empsoft.safe_meal.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.FilterListAdapter;
+import com.empsoft.safe_meal.models.Filter;
 import com.empsoft.safe_meal.models.FilterItem;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class SelectFiltersFragment extends Fragment {
 
     private static SelectFiltersFragment fragment;
     public static final String TAG = "SELECT_FILTERS_FRAGMENT";
-    private List<FilterItem> filterList;
+    private List<Filter> filterList;
     private List<String> filterListName;
     private int[] filterListIcon;
     private List<String> selectedFilterList;
@@ -80,11 +83,25 @@ public class SelectFiltersFragment extends Fragment {
 
         final Button checkAllBtn = (Button) view.findViewById(R.id.select_all_filters);
 
-        final FilterListAdapter mAdapter= new FilterListAdapter(getActivity(),filterList, selectedFilterList, checkAllBtn);
+        final FilterListAdapter mAdapter= new FilterListAdapter(getActivity(),filterList, checkAllBtn);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
+        final RecyclerView checkboxListView = (RecyclerView) view.findViewById(R.id.filter_list);
+        checkboxListView.setLayoutManager(llm);
         checkboxListView.setAdapter(mAdapter);
 
+
+        final FilterListAdapter mAdapter2= new FilterListAdapter(getActivity(),filterList, checkAllBtn);
+
+        LinearLayoutManager llm2 = new LinearLayoutManager(getActivity());
+        llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+
+
+        final RecyclerView checkboxListView2 = (RecyclerView) view.findViewById(R.id.filter_list_cuisine);
+        checkboxListView2.setLayoutManager(llm2);
+        checkboxListView2.setAdapter(mAdapter2);
 
         final Button nextBtn = (Button) view.findViewById(R.id.next_to_cuisine);
 
@@ -117,10 +134,10 @@ public class SelectFiltersFragment extends Fragment {
 
     }
 
-    private List<FilterItem> addItens(List<String> filterListName, int[] filterListIcon) {
-        ArrayList<FilterItem> filters = new ArrayList<>();
+    private List<Filter> addItens(List<String> filterListName, int[] filterListIcon) {
+        ArrayList<Filter> filters = new ArrayList<>();
         for (int i = 0; i < filterListName.size(); i++) {
-            filters.add(new FilterItem(filterListName.get(i),filterListIcon[i]));
+            filters.add(new Filter(filterListName.get(i),filterListIcon[i]));
         }
         return filters;
     }

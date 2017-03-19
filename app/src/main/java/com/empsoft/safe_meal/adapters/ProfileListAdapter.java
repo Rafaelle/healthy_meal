@@ -1,6 +1,7 @@
 package com.empsoft.safe_meal.adapters;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 
 import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.models.FilterItem;
 import com.empsoft.safe_meal.models.ProfileItem;
 
 import java.util.ArrayList;
@@ -119,3 +121,5 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
     }
 
 }
+
+

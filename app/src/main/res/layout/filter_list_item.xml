@@ -7,18 +7,20 @@
 
     <ImageButton
         android:id="@+id/icon_im"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:padding="5dp"
-        android:layout_height="40dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_bread"
         android:background="@drawable/rounded_bg_filter_icon"/>
 
     <CheckBox
         android:id="@+id/checkbox"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:padding="5dp"
-        android:layout_toRightOf="@+id/icon_im"
+        android:layout_below="@+id/icon_im"
         android:layout_height="40dp"
         android:layout_gravity="start"
+        android:textSize="12dp"
         android:drawableRight="@drawable/checkbox_ck_icon"
         android:background="@drawable/bg_checkbox_filter"
         android:textColor="@drawable/checkbox_text_color"

@@ -11,22 +11,23 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 
 import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.models.Filter;
 import com.empsoft.safe_meal.models.FilterItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterListCuisineAdapter extends ArrayAdapter<FilterItem> {
+public class FilterListCuisineAdapter extends ArrayAdapter<Filter> {
 
     private static final String TAG = "Filter_list_cuisine_adapter ";
-    private final List<FilterItem> items;
+    private final List<Filter> items;
     private final List<String> selectedItems;
     private final Activity activity;
     private List<CheckBox> checkBoxItems;
     private Button checkAllBtn;
 
 
-    public FilterListCuisineAdapter(Activity activity, List<FilterItem> items, List<String> selectedItems, Button checkAllBtn) {
+    public FilterListCuisineAdapter(Activity activity, List<Filter> items, List<String> selectedItems, Button checkAllBtn) {
         super(activity, android.R.layout.simple_list_item_1, items);
         this.items = items;
         this.selectedItems = selectedItems;
@@ -36,7 +37,8 @@ public class FilterListCuisineAdapter extends ArrayAdapter<FilterItem> {
     }
 
     @Override
-    public FilterItem getItem(int position) {
+    public Filter getItem(int position) {
+
         return items.get(position);
     }
 
@@ -55,7 +57,7 @@ public class FilterListCuisineAdapter extends ArrayAdapter<FilterItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
-        final FilterItem currFilter = items.get(position);
+        final Filter currFilter = items.get(position);
 
         if (v == null) {
             LayoutInflater inflater = activity.getLayoutInflater();

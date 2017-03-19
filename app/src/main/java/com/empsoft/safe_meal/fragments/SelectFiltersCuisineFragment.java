@@ -11,7 +11,7 @@ import android.widget.GridView;
 
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.FilterListCuisineAdapter;
-import com.empsoft.safe_meal.models.FilterItem;
+import com.empsoft.safe_meal.models.Filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
     private static SelectFiltersCuisineFragment fragment;
     public static final String TAG = "SELECT_FILTERS_CUISINE_FRAGMENT";
-    private List<FilterItem> filterCuisineList;
+    private List<Filter> filterCuisineList;
     private List<String> filterListName;
     private int[] filterListIcon;
     private List<String> selectedFilterCuisineList;
@@ -114,10 +114,10 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
     }
 
-    private List<FilterItem> addItens(List<String> filterListName, int[] filterListIcon) {
-        ArrayList<FilterItem> filters = new ArrayList<>();
+    private List<Filter> addItens(List<String> filterListName, int[] filterListIcon) {
+        ArrayList<Filter> filters = new ArrayList<>();
         for (int i = 0; i < filterListName.size(); i++) {
-            filters.add(new FilterItem(filterListName.get(i),filterListIcon[i]));
+            filters.add(new Filter(filterListName.get(i),filterListIcon[i]));
         }
         return filters;
     }
@@ -125,7 +125,6 @@ public class SelectFiltersCuisineFragment extends Fragment {
     private String getStrigsFromList(List<String> selectedFilterList) {
         String str = "You have selected: ";
         for (String filter: selectedFilterList) {
-            Log.d(TAG,filter);
             str = str + filter + ", ";
         }
         return str;
