@@ -3,4 +3,6 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="result">Result</string>
+    <string name="dont_find_recipes">Ops! we don\'t find any recipe with this options :(</string>
 </resources>

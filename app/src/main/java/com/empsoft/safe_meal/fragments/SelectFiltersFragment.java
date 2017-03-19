@@ -85,19 +85,15 @@ public class SelectFiltersFragment extends Fragment {
         final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
         checkboxListView.setAdapter(mAdapter);
 
-
         final Button nextBtn = (Button) view.findViewById(R.id.next_to_cuisine);
-
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity) getActivity()).setRecipeFiltersSelected(mAdapter.getSelectedItems());
                 ((MainActivity) getActivity()).changeFragment(SelectFiltersCuisineFragment.getInstance(),SelectFiltersCuisineFragment.TAG,true );
             }
         });
-
-
-
 
         checkAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override

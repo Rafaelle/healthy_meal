@@ -1,5 +1,6 @@
 package com.empsoft.safe_meal.fragments;
 
+import android.media.MediaActionSound;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class ProfilesFragment extends Fragment {
 
         mSelectedProfiles = new ArrayList<>();
 
-        ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),mProfiles, mSelectedProfiles);
+        final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),mProfiles, mSelectedProfiles);
 
         final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
         checkboxGridView.setAdapter(mAdapter);
@@ -80,6 +81,7 @@ public class ProfilesFragment extends Fragment {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity) getActivity()).setSelectedProfiles(mAdapter.getSelectedItens());
                 ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
             }
         });

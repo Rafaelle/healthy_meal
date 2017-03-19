@@ -118,4 +118,16 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
         return selectedItems.size() == 11;
     }
 
+    public ArrayList<ProfileItem> getSelectedItens(){
+        ArrayList<ProfileItem> selected = new ArrayList<>();
+        if (selectedItems != null){
+            for (ProfileItem profile : items) {
+                if (selectedItems.contains(profile.getName())){
+                    selected.add(profile);
+                }
+            }
+        }
+        return selected;
+    }
+
 }
