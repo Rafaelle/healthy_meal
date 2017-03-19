@@ -7,4 +7,9 @@
     <string name="dont_find_recipes">Ops! we don\'t find any recipe with this options :(</string>
     <string name="you_can_select_cuisine_filters">You can select cuisine filters</string>
     <string name="you_can_select_meal_type_filters">You can select meal type filters</string>
+
+    <!-- TOAST -->
+    <string name="not_ready">Sorry, not ready yet :\'(</string>
+    <string name="wait">Wait .....  :)</string>
+
 </resources>

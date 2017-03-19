@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
@@ -18,7 +19,6 @@ import com.empsoft.safe_meal.models.FilterItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 public class SelectFiltersCuisineFragment extends Fragment {
 
@@ -115,16 +115,15 @@ public class SelectFiltersCuisineFragment extends Fragment {
 
         final ImageButton searchBtn = (ImageButton) view.findViewById(R.id.search_recipes);
 
-
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).changeFragment(SelectFiltersCuisineFragment.getInstance(),SelectFiltersCuisineFragment.TAG,true );
+                Toast.makeText(getContext(), R.string.wait, Toast.LENGTH_LONG).show();
+
+                ((MainActivity)getActivity()).complexSearch();
+                //((MainActivity) getActivity()).changeFragment(RecipeListFragment.getInstance(),RecipeListFragment.TAG,true );
             }
         });
-
-
-
 
         checkAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +134,6 @@ public class SelectFiltersCuisineFragment extends Fragment {
                 }else {
                     mAdapter.checkAll();
                     checkAllBtn.setText("uncheck all");
-
                 }
             }
         });

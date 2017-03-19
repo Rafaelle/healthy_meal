@@ -15,9 +15,11 @@ import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchResult;
+import com.empsoft.safe_meal.services.retrofit_models.IngredientsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.Recipe;
 import com.empsoft.safe_meal.services.retrofit_models.SpoonacularService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         mProfilesFragment = ProfilesFragment.getInstance();
         selectFiltersFragment = SelectFiltersFragment.getInstance();
         recipeListFragment = RecipeListFragment.getInstance();
+
+        selectedProfiles = new ArrayList<>();
+        generalRecipes = new ArrayList<>();
+        recipeFiltersSelected = new ArrayList<>();
+        selectedCuisineFilters = new ArrayList<>();
+
 
         spoonacularService = new SpoonacularService(getString(R.string.SPOONACULATOR_API_KEY));
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
@@ -96,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void complexSearch(){
-/*
+        /*
         String cuisine, String diet, String excludeIngredients,String intolerances,
                 Integer number, String query, String type*/
         String query = "";
@@ -154,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
         this.recipeFiltersSelected = recipeFiltersSelected;
     }
 
+    public List<GeneralRecipe> getGeneralRecipes() {
+        return generalRecipes;
+    }
 
     private String getCuisine(){
         String filters = "";

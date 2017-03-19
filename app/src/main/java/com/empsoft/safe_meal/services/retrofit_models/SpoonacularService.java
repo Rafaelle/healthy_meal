@@ -74,7 +74,7 @@ public class SpoonacularService {
     }
 
     public void findRecipesByIngredients(final IngredientsMapper ingredientsMapper,
-                                                final Callback<List<Recipe>> callback) {
+                                         final Callback<List<Recipe>> callback) {
 
 
         Call<List<Recipe>> call = spoonacularService.findRecipesByIngredients(
@@ -91,7 +91,7 @@ public class SpoonacularService {
     }
 
     public void getRecipeInformation(final RecipeInformationMapper recipeInformationMapper,
-                                         final Callback<RecipeInformation> callback) {
+                                     final Callback<RecipeInformation> callback) {
 
         Call<RecipeInformation> call = spoonacularService.getRecipeInformation(
                 MASHAPE_KEY,
@@ -105,7 +105,7 @@ public class SpoonacularService {
     }
 
     public void searchComplex(final ComplexSearchMapper complexSearchMapper,
-                                final Callback<ComplexSearchResult>  callback){
+                              final Callback<ComplexSearchResult>  callback){
 
         Call<ComplexSearchResult> call = spoonacularService.searchComplex(
                 MASHAPE_KEY,
