@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         //complexSearchMapper.setLimitLicense(false);
         //complexSearchMapper.setNumber(5);
 
+        generalRecipes.clear();
         spoonacularService.searchComplex(complexSearchMapper, new Callback<ComplexSearchResult>() {
             @Override
             public void onResponse(Call<ComplexSearchResult> call, Response<ComplexSearchResult> response) {

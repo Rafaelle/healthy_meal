@@ -72,13 +72,12 @@ public class SelectFiltersCuisineFragment extends Fragment {
                             "Nordic", "Eastern European", "Caribbean",
                             "Latin American")); */
         filterListName = new ArrayList<>(Arrays.asList( "African", "Chinese",
-                "Japanese", "Korean", "Vietnamese",
-                "Thai", "Indian", "British",
+                "Japanese", "Korean",
+                "Thai", "Indian",
                 "French", "Italian",
-                "Mexican", "Spanish", "Middle Eastern",
-                "American",
-                "Southern", "Greek", "German",
-                "Latin American"));
+                "Mexican", "Spanish",
+                "Middle Eastern","American",
+                "German","Latin American"));
 
         filterListIcon = new int []{R.drawable.ic_cuisine, R.drawable.ic_cuisine,
                 R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
@@ -99,19 +98,6 @@ public class SelectFiltersCuisineFragment extends Fragment {
         final GridView checkboxListView = (GridView) view.findViewById(R.id.filter_list);
         checkboxListView.setAdapter(mAdapter);
 
-        checkAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAdapter.allIschecked()){
-                    mAdapter.uncheckAll();
-                    checkAllBtn.setText("check all");
-                }else {
-                    mAdapter.checkAll();
-                    checkAllBtn.setText("uncheck all");
-
-                }
-            }
-        });
 
         final ImageButton searchBtn = (ImageButton) view.findViewById(R.id.search_recipes);
 
