@@ -1,6 +1,7 @@
 package com.empsoft.safe_meal.adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.empsoft.safe_meal.DownloadImageTask;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.models.GeneralRecipe;
@@ -59,7 +61,7 @@ public class RecipeListViewAdapter extends ArrayAdapter {
         ImageView recipeImage = (ImageView) convertView.findViewById(R.id.recipe_image);
 
         LinearLayout ll = (LinearLayout) convertView.findViewById(R.id.recipe_ll);
-/*
+
         if (generalRecipe.getImage() == null){
             DownloadImageTask downloadImageTask = new DownloadImageTask(recipeImage);
             downloadImageTask.execute(generalRecipe.getRecipe().getImage());
@@ -71,7 +73,6 @@ public class RecipeListViewAdapter extends ArrayAdapter {
         } else {
             recipeImage.setImageBitmap(generalRecipe.getImage());
         }
-*/
 
         recipeName.setText(generalRecipe.getRecipe().getTitle());
 

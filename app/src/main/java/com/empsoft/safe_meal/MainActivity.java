@@ -1,5 +1,6 @@
 package com.empsoft.safe_meal;
 
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -166,6 +167,14 @@ public class MainActivity extends AppCompatActivity {
         return generalRecipes;
     }
 
+    public void setImageGeneralRecipe(int id, Bitmap bitmap){
+        for (GeneralRecipe generalRecipe : generalRecipes){
+            if (generalRecipe.getRecipe().getId() == id){
+                generalRecipe.setImage(bitmap);
+            }
+        }
+    }
+
     private String getCuisine(){
         String filters = "";
         if (selectedCuisineFilters != null && selectedCuisineFilters.size() > 0){
@@ -204,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         String diets = "";
 
         for (ProfileItem profileItem: selectedProfiles){
-            if (!profileItem.getDiet().dietToString().equals("")){
+            if (profileItem.getDiet()!= null && !profileItem.getDiet().dietToString().equals("")){
                 diets += profileItem.getDiet().dietToString() + ",";
             }
         }
@@ -224,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         String intolerances = "";
 
         for (ProfileItem profileItem: selectedProfiles){
-            if (!profileItem.getDiet().intoleranceToString().equals("")){
+            if (profileItem.getDiet()!= null && !profileItem.getDiet().intoleranceToString().equals("")){
                 intolerances += profileItem.getDiet().intoleranceToString() + ",";
             }
         }
@@ -245,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         String excludeIngredients = "";
 
         for (ProfileItem profileItem: selectedProfiles){
-            if (!profileItem.getDiet().excludeIngredientsToString().equals("")){
+            if (profileItem.getDiet()!= null && !profileItem.getDiet().excludeIngredientsToString().equals("")){
                 excludeIngredients += profileItem.getDiet().excludeIngredientsToString() + ",";
             }
         }
