@@ -62,14 +62,21 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
         final ProfileItem currProfile = items.get(position);
 
         if (v == null) {
-            LayoutInflater inflater = activity.getLayoutInflater();
-            v = inflater.inflate(R.layout.profile_item, null);
+            if(currProfile.getName().equals("ADD PROFILE")){
+                LayoutInflater inflater = activity.getLayoutInflater();
+                v = inflater.inflate(R.layout.profile_item_add, null);
+            }else {
+                LayoutInflater inflater = activity.getLayoutInflater();
+                v = inflater.inflate(R.layout.profile_item, null);
+            }
         }
+
 
         final CheckBox checkboxItem = (CheckBox) v.findViewById(R.id.checkbox_profile);
         checkboxItem.setText(currProfile.getName());
 
         checkBoxItems.add(checkboxItem);
+
 
 
 

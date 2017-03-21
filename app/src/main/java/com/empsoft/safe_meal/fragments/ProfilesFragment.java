@@ -2,6 +2,7 @@ package com.empsoft.safe_meal.fragments;
 
 import android.media.MediaActionSound;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,7 +65,9 @@ public class ProfilesFragment extends Fragment {
                 new ProfileItem("Rafaelle", null),
                 new ProfileItem("Luiza", null),
                 new ProfileItem("Igor", null),
-                new ProfileItem("Khelvin", null)));
+                new ProfileItem("Khelvin", null),
+                new ProfileItem("Maria", null),
+                new ProfileItem("ADD PROFILE", null)));
 
         mSelectedProfiles = new ArrayList<>();
 
@@ -73,7 +76,7 @@ public class ProfilesFragment extends Fragment {
         final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
         checkboxGridView.setAdapter(mAdapter);
 
-        final Button nextBtn = (Button) view.findViewById(R.id.next);
+        final FloatingActionButton nextBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
         modifyActioonBar();
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
