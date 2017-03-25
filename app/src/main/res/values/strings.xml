@@ -4,7 +4,7 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="result">Result</string>
-    <string name="dont_find_recipes">Ops! we don\'t find any recipe with this options :(</string>
+    <string name="dont_find_recipes">Ops! we couldn\'t find any recipe with this options :(</string>
     <string name="you_can_select_cuisine_filters">You can select cuisine filters</string>
     <string name="you_can_select_meal_type_filters">You can select meal type filters</string>
 
