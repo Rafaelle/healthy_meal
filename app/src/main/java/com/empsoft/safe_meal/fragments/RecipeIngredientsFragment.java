@@ -3,6 +3,7 @@ package com.empsoft.safe_meal.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +72,7 @@ public class RecipeIngredientsFragment extends Fragment {
 
             }
             RecipeIngredientsAdapter adapter = new RecipeIngredientsAdapter(mIngredients);
-//            mRecycleView.setLayoutManager(new FlowLayoutManager().setAlignment(Alignment.LEFT));
+            mRecycleView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
             mRecycleView.setAdapter(adapter);
         }
