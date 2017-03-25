@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.projeto_les.easymeal.Globals;
-import com.projeto_les.easymeal.MainActivity;
-import com.projeto_les.easymeal.R;
-import com.projeto_les.easymeal.adapters.RecipeSwipeAdapter;
-import com.projeto_les.easymeal.services.retrofit_models.RecipeInformation;
+import com.empsoft.safe_meal.DownloadImageTask;
+import com.empsoft.safe_meal.MainActivity;
+import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.adapters.RecipeSwipeAdapter;
+import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
+
 
 /**
  * Created by samirsmedeiros on 28/02/17.
@@ -59,7 +60,7 @@ public class RecipeDetailsFragment extends Fragment {
         mPager = (ViewPager) feed_view.findViewById(R.id.feed_pager);
         mPager.setAdapter(mAdapter);
 
-        mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
+       // mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
         if (mRecipe!= null){
 
             mRecipeImage = (ImageView) feed_view.findViewById(R.id.recipe_image);

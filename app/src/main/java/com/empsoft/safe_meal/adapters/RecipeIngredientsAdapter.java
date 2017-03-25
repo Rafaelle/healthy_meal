@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.projeto_les.easymeal.R;
-import com.projeto_les.easymeal.models.ChipView;
-import com.projeto_les.easymeal.models.ChipViewShow;
+
+import com.empsoft.safe_meal.models.ChipViewShow;
 
 import java.util.List;
 

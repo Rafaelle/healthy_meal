@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.projeto_les.easymeal.Globals;
-import com.projeto_les.easymeal.MainActivity;
-import com.projeto_les.easymeal.R;
-import com.projeto_les.easymeal.services.retrofit_models.AnalyzedRecipeInstructions;
-import com.projeto_les.easymeal.services.retrofit_models.RecipeInformation;
-import com.projeto_les.easymeal.services.retrofit_models.Step;
+
+import com.empsoft.safe_meal.MainActivity;
+import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
+import com.empsoft.safe_meal.services.retrofit_models.Step;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +60,7 @@ public class RecipeStepsFragment extends Fragment {
 
         mListView = (ListView) mview.findViewById(R.id.recipe_steps_list);
 
-        mAnalyzedRecipe = ((MainActivity) getActivity()).getGlobals().getAnalyzedRecipeInstructions();
+//        mAnalyzedRecipe = ((MainActivity) getActivity()).getGlobals().getAnalyzedRecipeInstructions();
 
         if (mAnalyzedRecipe != null) {
 

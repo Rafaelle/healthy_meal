@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.empsoft.safe_meal.DownloadImageTask;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import java.util.List;
 
@@ -79,10 +80,8 @@ public class RecipeListViewAdapter extends ArrayAdapter {
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //TODO adicionar na intet o valor real de ID das receitas
-                Toast.makeText(getContext(), R.string.not_ready, Toast.LENGTH_LONG).show();
-
+                //TO DO carregar as informações
+                ((MainActivity) activity).changeFragment(RecipeDetailsFragment.getInstance(),RecipeDetailsFragment.TAG,true );
             }
         });
 

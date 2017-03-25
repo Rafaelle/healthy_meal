@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.projeto_les.easymeal.Globals;
-import com.projeto_les.easymeal.MainActivity;
-import com.projeto_les.easymeal.R;
-import com.projeto_les.easymeal.adapters.RecipeIngredientsAdapter;
-import com.projeto_les.easymeal.services.retrofit_models.ExtendedIngredient;
-import com.projeto_les.easymeal.services.retrofit_models.RecipeInformation;
-import com.xiaofeng.flowlayoutmanager.Alignment;
-import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
+import com.empsoft.safe_meal.MainActivity;
+import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.adapters.RecipeIngredientsAdapter;
+import com.empsoft.safe_meal.services.retrofit_models.ExtendedIngredient;
+import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +60,7 @@ public class RecipeIngredientsFragment extends Fragment {
 
         startAdapter();
 
-        mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
+//        mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
         if (mRecipe != null) {
             mRecycleView = (RecyclerView) mview.findViewById(R.id.recipe_ingredient_list);
 
@@ -74,7 +71,7 @@ public class RecipeIngredientsFragment extends Fragment {
 
             }
             RecipeIngredientsAdapter adapter = new RecipeIngredientsAdapter(mIngredients);
-            mRecycleView.setLayoutManager(new FlowLayoutManager().setAlignment(Alignment.LEFT));
+//            mRecycleView.setLayoutManager(new FlowLayoutManager().setAlignment(Alignment.LEFT));
 
             mRecycleView.setAdapter(adapter);
         }

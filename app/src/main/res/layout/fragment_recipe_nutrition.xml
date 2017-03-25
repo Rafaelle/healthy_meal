@@ -5,14 +5,14 @@
     android:padding="10dp"
     android:background="@android:color/white"
     android:layout_height="match_parent"
-    tools:context="com.empsoft.safe_meal.fragments.RecipeDescriptionFragment">
+    tools:context="com.empsoft.safe_meal.fragments.RecipeNutritionFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/iv_icon_descrition"
+            android:id="@+id/iv_icon_nutrition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cook"/>
@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_icon_descrition"
+            android:layout_toRightOf="@+id/iv_icon_nutrition"
             android:layout_marginLeft="10sp"
             android:text="Title"
             android:textSize="20dp"

@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.projeto_les.easymeal.Globals;
-import com.projeto_les.easymeal.MainActivity;
-import com.projeto_les.easymeal.R;
-import com.projeto_les.easymeal.models.GeneralRecipe;
-import com.projeto_les.easymeal.services.retrofit_models.RecipeInformation;
+import com.empsoft.safe_meal.models.GeneralRecipe;
+import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
+import com.empsoft.safe_meal.R;
 
 
-public class RecipeDescriptionFragment extends Fragment {
+public class RecipeNutritionFragment extends Fragment {
 
     public static final String TAG = "DESCRIPTION_FRAGMENT";
     private View mview;
@@ -25,13 +23,13 @@ public class RecipeDescriptionFragment extends Fragment {
     private GeneralRecipe generalRecipe;
 
 
-    public RecipeDescriptionFragment() {
+    public RecipeNutritionFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RecipeDescriptionFragment getInstance() {
-        RecipeDescriptionFragment fragment = new RecipeDescriptionFragment();
+    public static RecipeNutritionFragment getInstance() {
+        RecipeNutritionFragment fragment = new RecipeNutritionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -46,15 +44,15 @@ public class RecipeDescriptionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mview = inflater.inflate(R.layout.fragment_recipe_description, container, false);
+        mview = inflater.inflate(R.layout.fragment_recipe_nutrition, container, false);
         startAdapter();
 
         mTitle = (TextView) mview.findViewById(R.id.Title);
         mReadyInMinutes = (TextView) mview.findViewById(R.id.readyInMinutes);
 
-        mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
+       // mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
 
-        generalRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected();
+//        generalRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected();
 
         if (generalRecipe != null){
             mTitle.setText(generalRecipe.getRecipe().getTitle());
