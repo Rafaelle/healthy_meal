@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <style name="text_material_body1">
+        <item name="android:textSize">@dimen/text_size_material_body</item>
+    </style>
+
+    <style name="view_chip_container">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/view_chip_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/bg_chip</item>
+    </style>
+
+    <style name="view_chip_textView" parent="@style/text_material_body1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/view_chip_textView_leftPadding</item>
+        <item name="android:layout_marginRight">@dimen/view_chip_textView_rightPadding</item>
+        <item name="android:textSize">@dimen/view_chip_textView_textSize</item>
+        <item name="android:textColor">@drawable/text_color_chip</item>
+    </style>
+
+    <style name="view_chip_imageButton">
+        <item name="android:layout_width">@dimen/view_chip_imageButton_close_size</item>
+        <item name="android:layout_height">@dimen/view_chip_imageButton_close_size</item>
+        <item name="android:layout_marginRight">@dimen/view_chip_imageButton_close_rightMargin</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:padding">@dimen/view_chip_imageButton_close_Padding</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:background">@drawable/bg_chip_close_button</item>
+        <item name="android:src">@drawable/icon_chip_close</item>
+    </style>
+
+    <style name="view_addButton">
+        <item name="android:layout_width">@dimen/view_chip_imageButton_close_size</item>
+        <item name="android:layout_height">@dimen/view_chip_imageButton_close_size</item>
+        <item name="android:layout_marginRight">@dimen/view_chip_imageButton_close_rightMargin</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:padding">@dimen/view_chip_imageButton_close_Padding</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:background">@drawable/bg_add_button</item>
+        <item name="android:src">@drawable/ic_add_blue</item>
+    </style>
+
+
+</resources>
