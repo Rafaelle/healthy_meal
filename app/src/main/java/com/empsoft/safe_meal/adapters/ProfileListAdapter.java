@@ -1,6 +1,10 @@
 package com.empsoft.safe_meal.adapters;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.models.ProfileItem;
+import com.empsoft.safe_meal.models.FilterItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -79,7 +84,6 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
 
 
 
-
         checkboxItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,10 +96,78 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
                     selectedItems.add(checkboxItem.getText().toString());
 
                 }
+
+                if(currProfile.getName().equals("ADD PROFILE")){
+                    createProfile();
+                }
             }
         });
 
         return v;
+    }
+
+    private void createProfile(){
+
+        List<String> filterIntoleranceListName = new ArrayList<>(Arrays.asList("Dairy", "Egg",
+                "Gluten", "Peanut", "Sesame", "Seafood", "Shellfish", "Soy", "Sulfite", "Tree", "Nut", "Wheat"));
+
+        List<String> filterDietListName = new ArrayList<>(Arrays.asList( "Pescetarian", "Lacto Vegetarian",
+                "Ovo Vegetarian", "Vegan", "Paleo", "Primal", "Vegetarian"));
+
+        int[] filterIntoleranceListIcon = new int []{R.drawable.ic_dairy, R.drawable.ic_egg,
+                R.drawable.ic_gluten, R.drawable.ic_peanut, R.drawable.ic_sesame,
+                R.drawable.ic_seafood, R.drawable.ic_shellfish, R.drawable.ic_soy, R.drawable.ic_sulfite,
+                R.drawable.ic_tree, R.drawable.ic_nut, R.drawable.ic_wheat
+        };
+
+        int[] filterDietListIcon = new int []{R.drawable.ic_diet, R.drawable.ic_diet,
+                R.drawable.ic_diet, R.drawable.ic_diet, R.drawable.ic_diet,
+                R.drawable.ic_diet, R.drawable.ic_diet,
+        };
+
+        List<FilterItem> filterDietList = addItens(filterDietListName, filterDietListIcon);
+        List<FilterItem> filterIntoleranceList = addItens(filterIntoleranceListName, filterIntoleranceListIcon);
+
+
+        List<String> selectedFilterIntoleranceList = new ArrayList<>();
+        List<String> selectedFilterDietList = new ArrayList<>();
+
+        View mView = View.inflate(activity, R.layout.fragment_create_profile, null);
+
+        final RestrictionListAdapter mDietAdapter= new RestrictionListAdapter(activity, filterDietList);
+        LinearLayoutManager llm = new LinearLayoutManager(activity);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        final RecyclerView checkboxDietListView = (RecyclerView) mView.findViewById(R.id.filter_list_diet);
+        checkboxDietListView.setLayoutManager(llm);
+        checkboxDietListView.setAdapter(mDietAdapter);
+
+        final RestrictionListAdapter mIntoleranceAdapter= new RestrictionListAdapter(activity, filterIntoleranceList);
+        LinearLayoutManager llm2 = new LinearLayoutManager(activity);
+        llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        final RecyclerView checkboxIntoleranceListView = (RecyclerView) mView.findViewById(R.id.filter_list_intolerance);
+        checkboxIntoleranceListView.setLayoutManager(llm2);
+        checkboxIntoleranceListView.setAdapter(mIntoleranceAdapter);
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Create profile")
+                .setView(mView)
+                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                       // selectedFilterDietList = mAdapter.getSelectedItems();
+                       // ((MainActivity) getActivity()).setSelectedDiets(selectedFilterDietList);
+
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(R.drawable.ic_add_user)
+                .show();
     }
 
     public List<String> getSelectedItems(){
@@ -135,6 +207,14 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
             }
         }
         return selected;
+    }
+
+    private List<FilterItem> addItens(List<String> filterListName, int[] filterListIcon) {
+        ArrayList<FilterItem> filters = new ArrayList<>();
+        for (int i = 0; i < filterListName.size(); i++) {
+            filters.add(new FilterItem(filterListName.get(i),filterListIcon[i]));
+        }
+        return filters;
     }
 
 }
