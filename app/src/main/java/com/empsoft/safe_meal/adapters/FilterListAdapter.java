@@ -42,6 +42,7 @@ public class FilterListAdapter extends ArrayAdapter<FilterItem> {
 
     @Override
     public FilterItem getItem(int position) {
+
         return items.get(position);
     }
 
@@ -53,6 +54,7 @@ public class FilterListAdapter extends ArrayAdapter<FilterItem> {
 
     @Override
     public long getItemId(int position) {
+
         return position;
     }
 
@@ -71,19 +73,21 @@ public class FilterListAdapter extends ArrayAdapter<FilterItem> {
         final ImageButton mImgBtn = (ImageButton) v.findViewById(R.id.icon_im);
         checkboxItem.setText(currFilter.getNome());
         mImgBtn.setImageResource(currFilter.getIcon());
-        checkBoxItems.add(checkboxItem);
+        if (!checkBoxItems.contains(checkboxItem))checkBoxItems.add(checkboxItem);
 
+        setChecked();
 
         checkboxItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (!checkboxItem.isChecked() && selectedItems.contains(checkboxItem.getText().toString())) {
+                if(!checkboxItem.isChecked() && selectedItems.contains(checkboxItem.getText().toString())){
                     selectedItems.remove(checkboxItem.getText().toString());
                     checkAllBtn.setText("check all");
-                } else if (checkboxItem.isChecked() && !selectedItems.contains(checkboxItem.getText().toString())) {
+                }
+                else if(checkboxItem.isChecked() && !selectedItems.contains(checkboxItem.getText().toString())) {
                     selectedItems.add(checkboxItem.getText().toString());
-                    if (allIschecked()) checkAllBtn.setText("uncheck all");
+                    if(allIschecked()) checkAllBtn.setText("uncheck all");
                 }
             }
         });
@@ -91,35 +95,45 @@ public class FilterListAdapter extends ArrayAdapter<FilterItem> {
         return v;
     }
 
+
     public List<String> getSelectedItems() {
         return selectedItems;
     }
 
-    public void checkAll() {
-        for (CheckBox cb : checkBoxItems) {
+    public void setChecked(){
+        for (CheckBox cb: checkBoxItems) {
+            if(selectedItems.contains(cb.getText())){
+                cb.setChecked(true);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
+    public void checkAll(){
+        for (CheckBox cb : checkBoxItems){
             if (!cb.isChecked()) {
                 cb.setChecked(true);
-                if (!selectedItems.contains(cb.getText().toString()))
-                    selectedItems.add(cb.getText().toString());
+                if(!selectedItems.contains(cb.getText().toString())) selectedItems.add(cb.getText().toString());
             }
 
         }
     }
-
-    public void uncheckAll() {
-        for (CheckBox cb : checkBoxItems) {
+    public void uncheckAll(){
+        for (CheckBox cb : checkBoxItems){
             if (cb.isChecked()) {
                 cb.setChecked(false);
-                if (selectedItems.contains(cb.getText().toString()))
-                    selectedItems.remove(cb.getText().toString());
+                if(selectedItems.contains(cb.getText().toString())) selectedItems.remove(cb.getText().toString());
             }
 
         }
     }
 
     public boolean allIschecked() {
-        return selectedItems.size() == 11;
+        return selectedItems.size() == items.size();
     }
 
+    public void setBtnCheckall(Button checkall) {
+        checkAllBtn = checkall;
+    }
 }
 
