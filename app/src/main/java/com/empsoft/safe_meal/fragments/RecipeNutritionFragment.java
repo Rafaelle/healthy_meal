@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
 import com.empsoft.safe_meal.R;
@@ -19,7 +20,6 @@ public class RecipeNutritionFragment extends Fragment {
     private View mview;
     private TextView mTitle;
     private TextView mReadyInMinutes;
-    private RecipeInformation mRecipe;
     private GeneralRecipe generalRecipe;
 
 
@@ -50,15 +50,13 @@ public class RecipeNutritionFragment extends Fragment {
         mTitle = (TextView) mview.findViewById(R.id.Title);
         mReadyInMinutes = (TextView) mview.findViewById(R.id.readyInMinutes);
 
-       // mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
 
-//        generalRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected();
+        generalRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected();
 
         if (generalRecipe != null){
             mTitle.setText(generalRecipe.getRecipe().getTitle());
-        }
-        if (mRecipe != null) {
-            mReadyInMinutes.setText("Ready in " + String.valueOf(mRecipe.getReadyInMinutes()) + " minutes.");
+            mReadyInMinutes.setText("Ready in " + String.valueOf(generalRecipe.getInformation().getReadyInMinutes()) + " minutes.");
+
         }
 
         return mview;

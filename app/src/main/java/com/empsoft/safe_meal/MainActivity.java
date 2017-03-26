@@ -142,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        recipeFiltersSelected.clear();
+        selectedCuisineFilters.clear();
+        selectedProfiles.clear();
     }
 
 
@@ -285,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getRecipeInformation(int id, Boolean includeNutrition){
+    public void getRecipeInformation(final int id, Boolean includeNutrition){
         // Now it's getting the main recipe information
         RecipeInformationMapper recipeInformationMapper = new RecipeInformationMapper(id, includeNutrition);
         spoonacularService.getRecipeInformation(recipeInformationMapper, new Callback<RecipeInformation>() {
@@ -295,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
                 generalRecipeSelected.setInformation(recipeInformation);
                 // If everything goes right, you should see information on log
                 Log.d("spoonacularService.getRecipeInformation", recipeInformation.toString());
+                getInstructionsByStep(id, false);
 
-                changeFragment(RecipeDetailsFragment.getInstance(),RecipeDetailsFragment.TAG,true );
             }
             @Override
             public void onFailure(Call<RecipeInformation> call, Throwable t) {

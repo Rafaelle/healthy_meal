@@ -60,7 +60,7 @@ public class RecipeStepsFragment extends Fragment {
 
         mListView = (ListView) mview.findViewById(R.id.recipe_steps_list);
 
-//        mAnalyzedRecipe = ((MainActivity) getActivity()).getGlobals().getAnalyzedRecipeInstructions();
+        mAnalyzedRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected().getAnalyzedRecipeInstructions();
 
         if (mAnalyzedRecipe != null) {
 
@@ -76,7 +76,6 @@ public class RecipeStepsFragment extends Fragment {
                     steps);
             mListView.setAdapter(adapter);
         }
-
 
         return mview;
     }

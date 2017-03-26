@@ -29,9 +29,9 @@ public class RecipeSwipeAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position)
     {
         switch (position){
-            case 0 : return RecipeIngredientsFragment.getInstance();
-            case 1 : return RecipeStepsFragment.getInstance();
-            case 2 : return RecipeNutritionFragment.getInstance();
+            case 0 : return RecipeNutritionFragment.getInstance();
+            case 1 : return RecipeIngredientsFragment.getInstance();
+            case 2 : return RecipeStepsFragment.getInstance();
         }
         return null;
     }
@@ -54,11 +54,12 @@ public class RecipeSwipeAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0 :
-                return "Ingredients";
-            case 1 :
-                return "Directions";
-            case 2 :
                 return "Nutrition";
+            case 1 :
+                return "Ingredients";
+
+            case 2 :
+                return "Directions";
         }
         return null;
     }

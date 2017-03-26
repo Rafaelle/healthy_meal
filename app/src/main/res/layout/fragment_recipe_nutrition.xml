@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/iv_icon_nutrition"
             android:layout_width="wrap_content"
@@ -21,12 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_icon_nutrition"
-            android:layout_marginLeft="10sp"
             android:text="Title"
             android:textSize="20dp"
             android:id="@+id/Title" />
-
-
 
     </RelativeLayout>
 
