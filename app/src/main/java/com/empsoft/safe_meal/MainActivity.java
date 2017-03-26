@@ -10,14 +10,19 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
+import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.fragments.RecipeListFragment;
 import com.empsoft.safe_meal.fragments.SelectFiltersFragment;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
+import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
+import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructionsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchResult;
 import com.empsoft.safe_meal.services.retrofit_models.IngredientsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.Recipe;
+import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
+import com.empsoft.safe_meal.services.retrofit_models.RecipeInformationMapper;
 import com.empsoft.safe_meal.services.retrofit_models.SpoonacularService;
 
 import java.util.ArrayList;
@@ -168,6 +173,14 @@ public class MainActivity extends AppCompatActivity {
         return generalRecipes;
     }
 
+    public GeneralRecipe getGeneralRecipeSelected() {
+        return generalRecipeSelected;
+    }
+
+    public void setGeneralRecipeSelected(GeneralRecipe generalRecipeSelected) {
+        this.generalRecipeSelected = generalRecipeSelected;
+    }
+
     public void setImageGeneralRecipe(int id, Bitmap bitmap){
         for (GeneralRecipe generalRecipe : generalRecipes){
             if (generalRecipe.getRecipe().getId() == id){
@@ -269,6 +282,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return excludeIngredients;
+    }
+
+
+    public void getRecipeInformation(int id, Boolean includeNutrition){
+        // Now it's getting the main recipe information
+        RecipeInformationMapper recipeInformationMapper = new RecipeInformationMapper(id, includeNutrition);
+        spoonacularService.getRecipeInformation(recipeInformationMapper, new Callback<RecipeInformation>() {
+            @Override
+            public void onResponse(Call<RecipeInformation> call, Response<RecipeInformation> response) {
+                RecipeInformation recipeInformation = response.body();
+                generalRecipeSelected.setInformation(recipeInformation);
+                // If everything goes right, you should see information on log
+                Log.d("spoonacularService.getRecipeInformation", recipeInformation.toString());
+
+                changeFragment(RecipeDetailsFragment.getInstance(),RecipeDetailsFragment.TAG,true );
+            }
+            @Override
+            public void onFailure(Call<RecipeInformation> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getInstructionsByStep(int id, boolean stepBreakdown) {
+        // Now you can get instructions by steps
+        AnalyzedRecipeInstructionsMapper analyzedRecipeInstructionsMapper = new AnalyzedRecipeInstructionsMapper(id, stepBreakdown);
+        spoonacularService.getAnalyzedRecipeInstructions(analyzedRecipeInstructionsMapper, new Callback<List<AnalyzedRecipeInstructions>>() {
+            @Override
+            public void onResponse(Call<List<AnalyzedRecipeInstructions>> call, Response<List<AnalyzedRecipeInstructions>> response) {
+                List<AnalyzedRecipeInstructions> analyzedRecipeInstructions = response.body();
+
+                for (AnalyzedRecipeInstructions i : analyzedRecipeInstructions) {
+                    getGeneralRecipeSelected().setAnalyzedRecipeInstructions(i);
+                    //If everything goes right, you should see information on log
+                    Log.d("spoonacularService.getAnalyzedRecipeInstructions", i.toString());
+                }
+                changeFragment(RecipeDetailsFragment.getInstance(),RecipeDetailsFragment.TAG,true );
+            }
+            @Override
+            public void onFailure(Call<List<AnalyzedRecipeInstructions>> call, Throwable t) {
+                          Log.d("spoonacularService.getAnalyzedRecipeInstructions", t.toString());
+            }
+        });
     }
 
 

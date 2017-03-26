@@ -68,9 +68,6 @@ public class RecipeListViewAdapter extends ArrayAdapter {
             downloadImageTask.execute(generalRecipe.getRecipe().getImage());
             ((MainActivity)activity).setImageGeneralRecipe(generalRecipe.getRecipe().getId(),downloadImageTask.getImage());
 
-            //items.get(position).setImage(downloadImageTask.getImage());
-            Log.d(TAG, "Download de imagem");
-
         } else {
             recipeImage.setImageBitmap(generalRecipe.getImage());
         }
@@ -81,7 +78,8 @@ public class RecipeListViewAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 //TO DO carregar as informações
-                ((MainActivity) activity).changeFragment(RecipeDetailsFragment.getInstance(),RecipeDetailsFragment.TAG,true );
+                ((MainActivity)activity).setGeneralRecipeSelected(items.get(position));
+                ((MainActivity)activity).getRecipeInformation(items.get(position).getRecipe().getId(), false);
             }
         });
 

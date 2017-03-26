@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.empsoft.safe_meal.DownloadImageTask;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.RecipeSwipeAdapter;
+import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
 
 
@@ -26,7 +28,8 @@ public class RecipeDetailsFragment extends Fragment {
     private RecipeSwipeAdapter mAdapter;
     private ViewPager mPager;
     private ImageView mRecipeImage;
-    private RecipeInformation mRecipe;
+    private GeneralRecipe generalRecipe;
+    private TextView mRecipeName;
 
     public RecipeDetailsFragment() {
         // Required empty public constructor
@@ -60,12 +63,23 @@ public class RecipeDetailsFragment extends Fragment {
         mPager = (ViewPager) feed_view.findViewById(R.id.feed_pager);
         mPager.setAdapter(mAdapter);
 
-       // mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
-        if (mRecipe!= null){
+        generalRecipe = ((MainActivity) getActivity()).getGeneralRecipeSelected();
 
+        if (generalRecipe != null){
             mRecipeImage = (ImageView) feed_view.findViewById(R.id.recipe_image);
             new DownloadImageTask(mRecipeImage)
-                    .execute(mRecipe.getImage());
+                    .execute(generalRecipe.getRecipe().getImage());
+            mRecipeName = (TextView) feed_view.findViewById(R.id.recipe_name);
+            mRecipeName.setText(generalRecipe.getRecipe().getTitle());
+
+            if (generalRecipe.getImage() == null){
+                DownloadImageTask downloadImageTask = new DownloadImageTask(mRecipeImage);
+                downloadImageTask.execute(generalRecipe.getRecipe().getImage());
+                ((MainActivity)getActivity()).setImageGeneralRecipe(generalRecipe.getRecipe().getId(),downloadImageTask.getImage());
+            } else {
+                mRecipeImage.setImageBitmap(generalRecipe.getImage());
+            }
+
         }
         // Inflate the layout for this fragment
         return feed_view;

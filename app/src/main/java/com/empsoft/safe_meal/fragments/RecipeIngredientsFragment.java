@@ -29,7 +29,7 @@ public class RecipeIngredientsFragment extends Fragment {
     private RecyclerView mRecycleView;
     private View mview;
     private List<String> mIngredients;
-    private RecipeInformation mRecipe;
+    private RecipeInformation mRecipeInformation;
 
 
     /**
@@ -61,12 +61,13 @@ public class RecipeIngredientsFragment extends Fragment {
 
         startAdapter();
 
-//        mRecipe = ((MainActivity) getActivity()).getGlobals().getRecipeInformation();
-        if (mRecipe != null) {
+        mRecipeInformation = ((MainActivity) getActivity()).getGeneralRecipeSelected().getInformation();
+
+        if (mRecipeInformation != null) {
             mRecycleView = (RecyclerView) mview.findViewById(R.id.recipe_ingredient_list);
 
             mIngredients = new ArrayList<String>();
-            for (ExtendedIngredient x: mRecipe.getExtendedIngredients()) {
+            for (ExtendedIngredient x: mRecipeInformation.getExtendedIngredients()) {
                 mIngredients.add(x.getOriginalString());
 
 

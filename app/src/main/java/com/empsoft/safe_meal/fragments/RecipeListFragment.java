@@ -65,7 +65,6 @@ public class RecipeListFragment extends Fragment {
         else {
             view.findViewById(R.id.no_result).setVisibility(View.GONE);
             view.findViewById(R.id.recipes_list).setVisibility(View.VISIBLE);
-
             recipesListView.setAdapter(new RecipeListViewAdapter(getActivity(), recipeList));
             ListUtils.setDynamicHeight(recipesListView);
 
