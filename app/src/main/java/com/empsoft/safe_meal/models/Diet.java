@@ -1,32 +1,68 @@
 package com.empsoft.safe_meal.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by michelly on 10/03/17.
  */
 
-public class Diet {
+public class Diet implements Parcelable {
 
     private String name;
     private Set<String> intolerances;
     private Set<String> diet;
     private Set<String> excludeIngredients;
 
-    public Diet(String name, Set<String> intolerances, Set<String> diet, Set<String> excludeIngredients) {
+
+    public Diet( String name, Set<String> intolerances, Set<String> diet, Set<String> excludeIngredients) {
         this.name = name;
         this.intolerances = intolerances;
         this.diet = diet;
         this.excludeIngredients = excludeIngredients;
     }
 
-    public String getName() {
-        return name;
+    public Diet(String name){
+        this.name = name;
+        this.intolerances = new HashSet<>();
+        this.diet = new HashSet<>();
+        this.excludeIngredients = new HashSet<>();
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    protected Diet(Parcel in) {
+        List<String> intolerancesList = new ArrayList<>();
+        List<String> dietList = new ArrayList<>();
+        List<String> excludeIngredientsList = new ArrayList<>();
+
+        name = in.readString();
+        in.readStringList(intolerancesList);
+        in.readStringList(dietList);
+        in.readStringList(excludeIngredientsList);
+
+        intolerances = new HashSet<String>(intolerancesList);
+        diet = new HashSet<String>(dietList);
+        excludeIngredients = new HashSet<String>(excludeIngredientsList);
     }
+
+    public static final Creator<Diet> CREATOR = new Creator<Diet>() {
+        @Override
+        public Diet createFromParcel(Parcel in) {
+            return new Diet(in);
+        }
+
+        @Override
+        public Diet[] newArray(int size) {
+            return new Diet[size];
+        }
+    };
 
     public Set<String> getIntolerances() {
         return intolerances;
@@ -94,10 +130,34 @@ public class Diet {
     @Override
     public String toString() {
         return "Diet{" +
-                "name='" + name + '\'' +
-                ", intolerances=" + intolerances +
+                "intolerances=" + intolerances +
                 ", diet=" + diet +
                 ", exclude Ingredients=" + excludeIngredients +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        ArrayList<String> intolerancesList = new ArrayList<String>();
+        ArrayList<String> dietList = new ArrayList<String>();
+        ArrayList<String> excludeIngredientsList = new ArrayList<String>();
+
+        for (String str : intolerances)
+            intolerancesList.add(str);
+        for (String str : diet)
+            intolerancesList.add(str);
+        for (String str : excludeIngredients)
+            intolerancesList.add(str);
+
+        dest.writeString(name);
+        dest.writeStringList(intolerancesList);
+        dest.writeStringList(dietList);
+        dest.writeStringList(excludeIngredientsList);
     }
 }
