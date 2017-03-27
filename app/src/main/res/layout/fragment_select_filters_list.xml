@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -11,22 +11,12 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1">
-        <TextView
-            android:id="@+id/filter_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:text="@string/you_can_select_meal_type_filters"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"/>
-
         <LinearLayout
             android:id="@+id/filter_layout"
             android:layout_below="@+id/filter_tv"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <GridView
                 android:id="@+id/filter_list"
                 android:layout_width="match_parent"
@@ -37,50 +27,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:padding="10dp">
-
-        <Button
-            android:id="@+id/select_all_filters"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentLeft="true"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic_checked"
-            android:padding="6dp"
-            android:textSize="20dp"
-            android:text="CHECK ALL"
-            android:drawablePadding="5dp"
-            android:textColor="@color/colorPrimaryDark" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:padding="10dp">
-
-        <Button
-            android:id="@+id/next_to_cuisine"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bg_button"
-            android:drawableRight="@drawable/ic_next"
-            android:padding="6dp"
-            android:text="next"
-            android:textSize="15dp"
-            android:textColor="@android:color/white" />
-
-
-    </RelativeLayout>
 
 
 </LinearLayout>

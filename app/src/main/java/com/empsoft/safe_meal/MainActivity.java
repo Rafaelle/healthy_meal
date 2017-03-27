@@ -7,19 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
 import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.fragments.RecipeListFragment;
-import com.empsoft.safe_meal.fragments.SelectFiltersFragment;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructionsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchResult;
-import com.empsoft.safe_meal.services.retrofit_models.IngredientsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.Recipe;
 import com.empsoft.safe_meal.services.retrofit_models.RecipeInformation;
 import com.empsoft.safe_meal.services.retrofit_models.RecipeInformationMapper;
@@ -37,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MAIN_ACTIVITY";
     private static final int numberResult = 5;
     private ProfilesFragment mProfilesFragment;
-    private SelectFiltersFragment selectFiltersFragment;
     private SpoonacularService spoonacularService;
-    private RecipeListFragment recipeListFragment;
+
+
 
     private List<ProfileItem> selectedProfiles;
     private List<String> recipeFiltersSelected;
@@ -54,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mProfilesFragment = ProfilesFragment.getInstance();
-        selectFiltersFragment = SelectFiltersFragment.getInstance();
-        recipeListFragment = RecipeListFragment.getInstance();
+
 
         selectedProfiles = new ArrayList<>();
         generalRecipes = new ArrayList<>();
         recipeFiltersSelected = new ArrayList<>();
         selectedCuisineFilters = new ArrayList<>();
+
 
 
         spoonacularService = new SpoonacularService(getString(R.string.SPOONACULATOR_API_KEY));
@@ -329,7 +326,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 
