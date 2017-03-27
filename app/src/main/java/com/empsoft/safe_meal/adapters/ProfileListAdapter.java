@@ -40,8 +40,6 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
     private List<CheckBox> checkBoxItems;
     private Button checkAllBtn;
 
-    private List<String> selectedFilterIntoleranceList = new ArrayList<>();
-    private List<String> selectedFilterDietList = new ArrayList<>();
 
 
     public ProfileListAdapter(Activity activity, List<ProfileItem> items, List<String> selectedItems) {
@@ -105,83 +103,12 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
 
                 }
 
-                if(currProfile.getName().equals("ADD PROFILE")){
-                    createProfile();
-                }
             }
         });
 
         return v;
     }
 
-    private void createProfile(){
-
-        List<String> filterIntoleranceListName = new ArrayList<>(Arrays.asList("Dairy", "Egg",
-                "Gluten", "Peanut", "Sesame", "Seafood", "Shellfish", "Soy", "Sulfite", "Tree", "Nut", "Wheat"));
-
-        List<String> filterDietListName = new ArrayList<>(Arrays.asList( "Pescetarian", "Lacto Vegetarian",
-                "Ovo Vegetarian", "Vegan", "Paleo", "Primal", "Vegetarian"));
-
-        int[] filterIntoleranceListIcon = new int []{R.drawable.ic_dairy, R.drawable.ic_egg,
-                R.drawable.ic_gluten, R.drawable.ic_peanut, R.drawable.ic_sesame,
-                R.drawable.ic_seafood, R.drawable.ic_shellfish, R.drawable.ic_soy, R.drawable.ic_sulfite,
-                R.drawable.ic_tree, R.drawable.ic_nut, R.drawable.ic_wheat
-        };
-
-        int[] filterDietListIcon = new int []{R.drawable.ic_diet, R.drawable.ic_diet,
-                R.drawable.ic_diet, R.drawable.ic_diet, R.drawable.ic_diet,
-                R.drawable.ic_diet, R.drawable.ic_diet,
-        };
-
-        List<FilterItem> filterDietList = addItens(filterDietListName, filterDietListIcon);
-        List<FilterItem> filterIntoleranceList = addItens(filterIntoleranceListName, filterIntoleranceListIcon);
-
-        View mView = View.inflate(activity, R.layout.fragment_create_profile, null);
-
-        final EditText mName =  (EditText) mView.findViewById(R.id.name_input);
-
-        final RestrictionListAdapter mDietAdapter= new RestrictionListAdapter(activity, filterDietList);
-        LinearLayoutManager llm = new LinearLayoutManager(activity);
-        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-        final RecyclerView checkboxDietListView = (RecyclerView) mView.findViewById(R.id.filter_list_diet);
-        checkboxDietListView.setLayoutManager(llm);
-        checkboxDietListView.setAdapter(mDietAdapter);
-
-        final RestrictionListAdapter mIntoleranceAdapter= new RestrictionListAdapter(activity, filterIntoleranceList);
-        LinearLayoutManager llm2 = new LinearLayoutManager(activity);
-        llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-        final RecyclerView checkboxIntoleranceListView = (RecyclerView) mView.findViewById(R.id.filter_list_intolerance);
-        checkboxIntoleranceListView.setLayoutManager(llm2);
-        checkboxIntoleranceListView.setAdapter(mIntoleranceAdapter);
-
-        new AlertDialog.Builder(getContext())
-                .setTitle("Create profile")
-                .setView(mView)
-                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedFilterDietList = mDietAdapter.getSelectedItems();
-                        selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
-                        Diet mDiet = new Diet(mName.getText().toString(),ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
-                        ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
-                        items.add(mProfile);
-
-                        notifyDataSetChanged();
-
-
-
-
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setIcon(R.drawable.ic_add_user)
-                .show();
-    }
 
     public List<String> getSelectedItems(){
         return selectedItems;
@@ -222,21 +149,5 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
         return selected;
     }
 
-    private List<FilterItem> addItens(List<String> filterListName, int[] filterListIcon) {
-        ArrayList<FilterItem> filters = new ArrayList<>();
-        for (int i = 0; i < filterListName.size(); i++) {
-            filters.add(new FilterItem(filterListName.get(i),filterListIcon[i]));
-        }
-        return filters;
-    }
-
-    private Set<String> ListToSet(List<String> list){
-        Set<String> set = new HashSet<String>(list);
-
-        for (String temp : set){
-            System.out.println(temp);
-        }
-        return set;
-    }
 
 }
