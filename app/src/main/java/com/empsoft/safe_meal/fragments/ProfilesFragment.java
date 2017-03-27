@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +18,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.adapters.FilterListAdapter;
 import com.empsoft.safe_meal.adapters.ProfileListAdapter;
 import com.empsoft.safe_meal.adapters.RestrictionListAdapter;
 import com.empsoft.safe_meal.models.Diet;
+
 import com.empsoft.safe_meal.models.FilterItem;
 import com.empsoft.safe_meal.models.ProfileItem;
 
@@ -38,6 +42,20 @@ public class ProfilesFragment extends Fragment {
     public static final String TAG = "PROFILES_FRAGMENT";
     private List<ProfileItem> mProfiles;
     private List<String> mSelectedProfiles;
+    private Button mTypeBtn;
+    private Button mCuisineBtn;
+
+    private List<String> filterTypeListName;
+    private List<String> filterCuisineListName;
+
+    private List<FilterItem> filterTypeList;
+    private List<FilterItem> filterCuisineList;
+
+    private int[] filterTypeListIcon;
+    private int[] filterCuisineListIcon;
+
+    private List<String> selectedFilterTypeList;
+    private List<String> selectedFilterCuisineList;
 
 
     private List<String> selectedFilterIntoleranceList = new ArrayList<>();
@@ -83,23 +101,52 @@ public class ProfilesFragment extends Fragment {
                 new ProfileItem("Khelvin", null),
                 new ProfileItem("Maria", null)));
 
+        filterCuisineListName = new ArrayList<>(Arrays.asList( "African", "Chinese", "Japanese",
+                  "Thai", "Indian", "British", "French", "Italian", "Mexican"
+                , "American", "Greek", "Latin American"));
+
+        filterTypeListName = new ArrayList<>(Arrays.asList( "Main Course", "Side Dish", "Dessert",
+                "Appetizer", "Salad", "Breakfast", "Soup", "Beverage", "Sauce", "Drink"));
+
+        filterTypeListIcon = new int []{R.drawable.ic_main_course, R.drawable.ic_side_dish,
+                R.drawable.ic_dessert, R.drawable.ic_appetizer,
+                R.drawable.ic_salad, R.drawable.ic_breakfast,
+                R.drawable.ic_soup, R.drawable.ic_beverage, R.drawable.ic_sauce,
+                R.drawable.ic_drink};
+
+        filterCuisineListIcon = new int []{R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+                R.drawable.ic_cuisine, R.drawable.ic_cuisine, R.drawable.ic_cuisine,
+        };
+
+        filterTypeList = addItens(filterTypeListName, filterTypeListIcon);
+        filterCuisineList = addItens(filterCuisineListName, filterCuisineListIcon);
+
         mSelectedProfiles = new ArrayList<>();
+        mTypeBtn = (Button) view.findViewById(R.id.id_type);
+        mCuisineBtn = (Button) view.findViewById(R.id.id_cuisine);
+
+        selectedFilterTypeList = new ArrayList<>();
+        selectedFilterCuisineList = new ArrayList<>();
 
         final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),mProfiles, mSelectedProfiles);
 
         final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
         checkboxGridView.setAdapter(mAdapter);
 
-        final FloatingActionButton nextBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
+        final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
         modifyActioonBar();
 
         checkboxGridView.setAdapter(mAdapter);
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).setSelectedProfiles(mAdapter.getSelectedItens());
-                ((MainActivity) getActivity()).changeFragment(SelectFiltersFragment.getInstance(),SelectFiltersFragment.TAG,true );
+                Toast.makeText(getContext(), R.string.wait, Toast.LENGTH_LONG).show();
+                ((MainActivity)getActivity()).complexSearch();
             }
         });
         final Button addUser = (Button) view.findViewById(R.id.add_user);
@@ -109,29 +156,31 @@ public class ProfilesFragment extends Fragment {
             public void onClick(View v) {
 
                 createProfile(checkboxGridView, mAdapter);
-                //((MainActivity) getActivity()).changeFragment(RecipeListFragment.getInstance(),RecipeListFragment.TAG,true );
             }
         });
+
+        filterType();
+        filterCuisine();
     return view;
 
     }
 
 
-    private void createProfile(final GridView mGrid, final ProfileListAdapter mNAdapter){
+    private void createProfile(final GridView mGrid, final ProfileListAdapter mNAdapter) {
 
         List<String> filterIntoleranceListName = new ArrayList<>(Arrays.asList("Dairy", "Egg",
                 "Gluten", "Peanut", "Sesame", "Seafood", "Shellfish", "Soy", "Sulfite", "Tree", "Nut", "Wheat"));
 
-        List<String> filterDietListName = new ArrayList<>(Arrays.asList( "Pescetarian", "Lacto Vegetarian",
+        List<String> filterDietListName = new ArrayList<>(Arrays.asList("Pescetarian", "Lacto Vegetarian",
                 "Ovo Vegetarian", "Vegan", "Paleo", "Primal", "Vegetarian"));
 
-        int[] filterIntoleranceListIcon = new int []{R.drawable.ic_dairy, R.drawable.ic_egg,
+        int[] filterIntoleranceListIcon = new int[]{R.drawable.ic_dairy, R.drawable.ic_egg,
                 R.drawable.ic_gluten, R.drawable.ic_peanut, R.drawable.ic_sesame,
                 R.drawable.ic_seafood, R.drawable.ic_shellfish, R.drawable.ic_soy, R.drawable.ic_sulfite,
                 R.drawable.ic_tree, R.drawable.ic_nut, R.drawable.ic_wheat
         };
 
-        int[] filterDietListIcon = new int []{R.drawable.ic_diet, R.drawable.ic_diet,
+        int[] filterDietListIcon = new int[]{R.drawable.ic_diet, R.drawable.ic_diet,
                 R.drawable.ic_diet, R.drawable.ic_diet, R.drawable.ic_diet,
                 R.drawable.ic_diet, R.drawable.ic_diet,
         };
@@ -141,9 +190,9 @@ public class ProfilesFragment extends Fragment {
 
         final View mView = View.inflate(getActivity(), R.layout.fragment_create_profile, null);
 
-        final EditText mName =  (EditText) mView.findViewById(R.id.name_input);
+        final EditText mName = (EditText) mView.findViewById(R.id.name_input);
 
-        final RestrictionListAdapter mDietAdapter= new RestrictionListAdapter(getActivity(), filterDietList);
+        final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
@@ -151,7 +200,7 @@ public class ProfilesFragment extends Fragment {
         checkboxDietListView.setLayoutManager(llm);
         checkboxDietListView.setAdapter(mDietAdapter);
 
-        final RestrictionListAdapter mIntoleranceAdapter= new RestrictionListAdapter(getActivity(), filterIntoleranceList);
+        final RestrictionListAdapter mIntoleranceAdapter = new RestrictionListAdapter(getActivity(), filterIntoleranceList);
         LinearLayoutManager llm2 = new LinearLayoutManager(getActivity());
         llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
 
@@ -166,13 +215,11 @@ public class ProfilesFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         selectedFilterDietList = mDietAdapter.getSelectedItems();
                         selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
-                        Diet mDiet = new Diet(mName.getText().toString(),ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
+                        Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
                         ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
                         mProfiles.add(mProfile);
 
                         mGrid.setAdapter(mNAdapter);
-
-
 
 
                     }
@@ -184,6 +231,68 @@ public class ProfilesFragment extends Fragment {
                 })
                 .setIcon(R.drawable.ic_add_user)
                 .show();
+    }
+
+    private void filterType() {
+        mTypeBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                View mView = View.inflate(getActivity(), R.layout.fragment_select_filters_list, null);
+                final FilterListAdapter mAdapter= new FilterListAdapter(getActivity(), filterTypeList, selectedFilterTypeList);
+                final GridView checkboxListView = (GridView) mView.findViewById(R.id.filter_list);
+                checkboxListView.setAdapter(mAdapter);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Select recipe types")
+                        .setView(mView)
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectedFilterTypeList = mAdapter.getSelectedItems();
+                                ((MainActivity) getActivity()).setRecipeFiltersSelected(selectedFilterTypeList);
+
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.ic_recipe_black)
+                        .show();
+            }
+        });
+    }
+
+    private void filterCuisine() {
+        mCuisineBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                View mView = View.inflate(getActivity(), R.layout.fragment_select_filters_list, null);
+                final FilterListAdapter mAdapter= new FilterListAdapter(getActivity(), filterCuisineList, selectedFilterCuisineList);
+                final GridView checkboxListView = (GridView) mView.findViewById(R.id.filter_list);
+                checkboxListView.setAdapter(mAdapter);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Select cuisines")
+                        .setView(mView)
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectedFilterCuisineList = mAdapter.getSelectedItems();
+                                ((MainActivity) getActivity()).setSelectedKitchenFilters(selectedFilterCuisineList);
+
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.ic_cuisine_grey)
+                        .show();
+            }
+        });
     }
 
 
@@ -220,6 +329,5 @@ public class ProfilesFragment extends Fragment {
         }
         return set;
     }
-
 
 }
