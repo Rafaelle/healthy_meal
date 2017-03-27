@@ -12,14 +12,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import java.util.HashSet;
 
+import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
+import com.empsoft.safe_meal.models.Diet;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.models.FilterItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by samirsmedeiros on 12/03/17.
@@ -34,6 +39,9 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
     private final Activity activity;
     private List<CheckBox> checkBoxItems;
     private Button checkAllBtn;
+
+    private List<String> selectedFilterIntoleranceList = new ArrayList<>();
+    private List<String> selectedFilterDietList = new ArrayList<>();
 
 
     public ProfileListAdapter(Activity activity, List<ProfileItem> items, List<String> selectedItems) {
@@ -128,11 +136,9 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
         List<FilterItem> filterDietList = addItens(filterDietListName, filterDietListIcon);
         List<FilterItem> filterIntoleranceList = addItens(filterIntoleranceListName, filterIntoleranceListIcon);
 
-
-        List<String> selectedFilterIntoleranceList = new ArrayList<>();
-        List<String> selectedFilterDietList = new ArrayList<>();
-
         View mView = View.inflate(activity, R.layout.fragment_create_profile, null);
+
+        final EditText mName =  (EditText) mView.findViewById(R.id.name_input);
 
         final RestrictionListAdapter mDietAdapter= new RestrictionListAdapter(activity, filterDietList);
         LinearLayoutManager llm = new LinearLayoutManager(activity);
@@ -155,8 +161,15 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
                 .setView(mView)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                       // selectedFilterDietList = mAdapter.getSelectedItems();
-                       // ((MainActivity) getActivity()).setSelectedDiets(selectedFilterDietList);
+                        selectedFilterDietList = mDietAdapter.getSelectedItems();
+                        selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
+                        Diet mDiet = new Diet(mName.getText().toString(),ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
+                        ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
+                        items.add(mProfile);
+
+                        notifyDataSetChanged();
+
+
 
 
                     }
@@ -215,6 +228,15 @@ public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
             filters.add(new FilterItem(filterListName.get(i),filterListIcon[i]));
         }
         return filters;
+    }
+
+    private Set<String> ListToSet(List<String> list){
+        Set<String> set = new HashSet<String>(list);
+
+        for (String temp : set){
+            System.out.println(temp);
+        }
+        return set;
     }
 
 }

@@ -79,6 +79,8 @@ public class ProfilesFragment extends Fragment {
         final FloatingActionButton nextBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
         modifyActioonBar();
 
+        checkboxGridView.setAdapter(mAdapter);
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +91,9 @@ public class ProfilesFragment extends Fragment {
     return view;
 
     }
+
+
+
 
     @Override
     public void onResume() {
