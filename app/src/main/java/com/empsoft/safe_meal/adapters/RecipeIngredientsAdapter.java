@@ -20,9 +20,11 @@ import java.util.List;
 public class RecipeIngredientsAdapter extends RecyclerView.Adapter {
 
     private List<String> items;
+    private List<String> itemsImg;
 
-    public RecipeIngredientsAdapter(List<String> items) {
+    public RecipeIngredientsAdapter(List<String> items, List<String> itemsImg) {
         this.items = items;
+        this.itemsImg = itemsImg;
     }
 
     @Override
@@ -34,11 +36,12 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         View mView =  ((ChipViewShow)holder.itemView);
         ((ChipViewShow)holder.itemView).displayItem(items.get(position));
+        ((ChipViewShow)holder.itemView).displayImg(itemsImg.get(position));
+
 
 
 
     }
-
 
 
     @Override
@@ -53,6 +56,3 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter {
         }
     }
 }
-
-
-

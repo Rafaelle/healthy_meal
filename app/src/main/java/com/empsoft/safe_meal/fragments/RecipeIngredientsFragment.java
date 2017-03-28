@@ -29,6 +29,8 @@ public class RecipeIngredientsFragment extends Fragment {
     private RecyclerView mRecycleView;
     private View mview;
     private List<String> mIngredients;
+    private List<String> mIngredientsImgs;
+
     private RecipeInformation mRecipeInformation;
 
 
@@ -62,17 +64,17 @@ public class RecipeIngredientsFragment extends Fragment {
         startAdapter();
 
         mRecipeInformation = ((MainActivity) getActivity()).getGeneralRecipeSelected().getInformation();
-
         if (mRecipeInformation != null) {
             mRecycleView = (RecyclerView) mview.findViewById(R.id.recipe_ingredient_list);
 
             mIngredients = new ArrayList<String>();
+            mIngredientsImgs = new ArrayList<String>();
             for (ExtendedIngredient x: mRecipeInformation.getExtendedIngredients()) {
                 mIngredients.add(x.getOriginalString());
-
+                mIngredientsImgs.add(x.getImage());
 
             }
-            RecipeIngredientsAdapter adapter = new RecipeIngredientsAdapter(mIngredients);
+            RecipeIngredientsAdapter adapter = new RecipeIngredientsAdapter(mIngredients, mIngredientsImgs);
             mRecycleView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
             mRecycleView.setAdapter(adapter);

@@ -7,41 +7,52 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.net.URL;
 
-public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+
+public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
+    ImageView imageView;
     Bitmap image;
 
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
+    public DownloadImageTask(ImageView imageView){
+        this.imageView = imageView;
         image = null;
     }
 
     public DownloadImageTask(){
-        bmImage = null;
+        imageView = null;
         image = null;
     }
+    /*
+        doInBackground(Params... params)
+            Override this method to perform a computation on a background thread.
+     */
+    protected Bitmap doInBackground(String...urls){
+        String urlOfImage = urls[0];
 
-    protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            image = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
+        try{
+            InputStream is = new URL(urlOfImage).openStream();
+                /*
+                    decodeStream(InputStream is)
+                        Decode an input stream into a bitmap.
+                 */
+            image = BitmapFactory.decodeStream(is);
+        }catch(Exception e){ // Catch the download exception
             e.printStackTrace();
         }
-        Log.d("Globals", "doInBackground");
         return image;
     }
 
-    protected void onPostExecute(Bitmap result) {
-        if(bmImage!= null){
-            bmImage.setImageBitmap(result);
-        }
+    /*
+        onPostExecute(Result result)
+            Runs on the UI thread after doInBackground(Params...).
+     */
+    protected void onPostExecute(Bitmap result){
+        imageView.setImageBitmap(result);
     }
 
     public Bitmap getImage() {
         return image;
     }
 }
+
