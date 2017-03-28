@@ -23,6 +23,7 @@ import com.empsoft.safe_meal.services.retrofit_models.RecipeInformationMapper;
 import com.empsoft.safe_meal.services.retrofit_models.SpoonacularService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,23 +46,31 @@ public class MainActivity extends AppCompatActivity {
     private List<GeneralRecipe> generalRecipes;
     private GeneralRecipe generalRecipeSelected;
 
+    private ArrayList<ProfileItem> mProfiles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mProfilesFragment = ProfilesFragment.getInstance();
-
-
         selectedProfiles = new ArrayList<>();
         generalRecipes = new ArrayList<>();
         recipeFiltersSelected = new ArrayList<>();
         selectedCuisineFilters = new ArrayList<>();
 
-
-
         spoonacularService = new SpoonacularService(getString(R.string.SPOONACULATOR_API_KEY));
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
+
+        mProfiles = new ArrayList<>(Arrays.asList(
+                //      new ProfileItem("ADD PROFILE", null),
+                new ProfileItem("Samir", null),
+                new ProfileItem("Martha", null),
+                new ProfileItem("Rafaelle", null),
+                new ProfileItem("Luiza", null),
+                new ProfileItem("Igor", null),
+                new ProfileItem("Khelvin", null),
+                new ProfileItem("Maria", null)));
     }
 
     /**
@@ -131,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     generalRecipes.add(new GeneralRecipe(recipe));
                 }
                 changeFragment(RecipeListFragment.getInstance(), RecipeListFragment.TAG,true );
+                clearSearch();
             }
 
             @Override
@@ -186,6 +196,20 @@ public class MainActivity extends AppCompatActivity {
             if (generalRecipe.getRecipe().getId() == id){
                 generalRecipe.setImage(bitmap);
             }
+        }
+    }
+
+    public ArrayList<ProfileItem> getProfiles() {
+        return mProfiles;
+    }
+
+    public void setProfiles(ArrayList<ProfileItem> profiles) {
+        this.mProfiles = profiles;
+    }
+
+    public void addProfile(ProfileItem profileItem){
+        if (!mProfiles.contains(profileItem)){
+            mProfiles.add(profileItem);
         }
     }
 
@@ -325,6 +349,13 @@ public class MainActivity extends AppCompatActivity {
                           Log.d("spoonacularService.getAnalyzedRecipeInstructions", t.toString());
             }
         });
+    }
+
+    private void clearSearch(){
+        selectedProfiles.clear();
+        recipeFiltersSelected.clear();
+        selectedCuisineFilters.clear();
+
     }
 
 
