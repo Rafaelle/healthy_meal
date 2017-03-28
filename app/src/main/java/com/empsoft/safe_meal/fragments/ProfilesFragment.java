@@ -1,7 +1,6 @@
 package com.empsoft.safe_meal.fragments;
 
 import android.content.DialogInterface;
-import android.media.MediaActionSound;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,9 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,7 +36,6 @@ public class ProfilesFragment extends Fragment {
 
     private static ProfilesFragment fragment;
     public static final String TAG = "PROFILES_FRAGMENT";
-    private List<ProfileItem> mProfiles;
     private List<String> mSelectedProfiles;
     private Button mTypeBtn;
     private Button mCuisineBtn;
@@ -91,15 +86,6 @@ public class ProfilesFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_profiles, container, false);
 
-        mProfiles = new ArrayList<>(Arrays.asList(
-          //      new ProfileItem("ADD PROFILE", null),
-                new ProfileItem("Samir", null),
-                new ProfileItem("Martha", null),
-                new ProfileItem("Rafaelle", null),
-                new ProfileItem("Luiza", null),
-                new ProfileItem("Igor", null),
-                new ProfileItem("Khelvin", null),
-                new ProfileItem("Maria", null)));
 
         filterCuisineListName = new ArrayList<>(Arrays.asList( "African", "Chinese", "Japanese",
                   "Thai", "Indian", "British", "French", "Italian", "Mexican"
@@ -131,12 +117,12 @@ public class ProfilesFragment extends Fragment {
         selectedFilterTypeList = new ArrayList<>();
         selectedFilterCuisineList = new ArrayList<>();
 
-        final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),mProfiles, mSelectedProfiles);
+        final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),((MainActivity)getActivity()).getProfiles(), mSelectedProfiles);
 
         final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
         checkboxGridView.setAdapter(mAdapter);
 
-        final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
+        final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.search_fab);
         modifyActioonBar();
 
         checkboxGridView.setAdapter(mAdapter);
@@ -217,10 +203,8 @@ public class ProfilesFragment extends Fragment {
                         selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
                         Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
                         ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
-                        mProfiles.add(mProfile);
-
+                        ((MainActivity) getActivity()).addProfile(mProfile);
                         mGrid.setAdapter(mNAdapter);
-
 
                     }
                 })
