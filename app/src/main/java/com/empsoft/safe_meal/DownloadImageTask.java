@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.InputStream;
@@ -12,6 +13,7 @@ import java.net.URL;
 
 public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
     ImageView imageView;
+    ImageView imageBtn;
     Bitmap image;
 
     public DownloadImageTask(ImageView imageView){
@@ -21,6 +23,11 @@ public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
 
     public DownloadImageTask(){
         imageView = null;
+        image = null;
+    }
+
+    public DownloadImageTask(ImageButton imageBtn){
+        this.imageBtn = imageBtn;
         image = null;
     }
     /*
@@ -48,7 +55,8 @@ public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
             Runs on the UI thread after doInBackground(Params...).
      */
     protected void onPostExecute(Bitmap result){
-        imageView.setImageBitmap(result);
+        if(imageView != null)imageView.setImageBitmap(result);
+        else imageBtn.setImageBitmap(result);
     }
 
     public Bitmap getImage() {

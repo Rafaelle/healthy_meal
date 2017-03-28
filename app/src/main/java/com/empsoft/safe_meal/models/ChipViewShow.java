@@ -6,6 +6,7 @@ package com.empsoft.safe_meal.models;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class ChipViewShow extends FrameLayout {
 
 
     public void displayImg(String s) {
-        new DownloadImageTask( ((ImageView)findViewById(R.id.iv_ingredients))).execute(s);
+        new DownloadImageTask( ((ImageButton)findViewById(R.id.iv_ingredients))).execute(s);
 
     }
 

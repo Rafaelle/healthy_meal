@@ -37,10 +37,11 @@ android:fitsSystemWindows="true"
             android:id="@+id/recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:lineSpacingExtra="8dp"
             android:layout_gravity="bottom"
             android:text="Recipe Name"
+            android:textColor="@android:color/white"
             android:padding="20dp" />
 
 
