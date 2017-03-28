@@ -70,7 +70,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         final CheckBox checkboxItem = ((ProfileViewItem) holder.itemView).getCheckBoxItem();
 
 
-        checkBoxItems.add(position, checkboxItem);
+        if(!checkBoxItems.contains(checkboxItem))checkBoxItems.add(checkboxItem);
 
 
         Log.d("position", String.valueOf(items.size()));
@@ -86,7 +86,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             }
         });
 
-        holder.cb.setChecked(selectedItems.contains(holder.tv.getText()));
+        holder.cb.setChecked(selectedItems.contains(items.get(position)));
     }
 
     @Override
