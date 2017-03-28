@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import java.util.HashSet;
 
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.models.Diet;
+import com.empsoft.safe_meal.models.FilterRestrictionItem;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.models.FilterItem;
+import com.empsoft.safe_meal.models.ProfileViewItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,123 +36,85 @@ import java.util.Set;
  */
 
 
-public class ProfileListAdapter extends ArrayAdapter<ProfileItem> {
+public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ProfileItemHolder>{
 
     private static final String TAG = "profile_list_adapter ";
     private final List<ProfileItem> items;
-    private final List<String> selectedItems;
+    private final List<ProfileItem> selectedItems;
     private final Activity activity;
     private List<CheckBox> checkBoxItems;
     private Button checkAllBtn;
 
 
 
-    public ProfileListAdapter(Activity activity, List<ProfileItem> items, List<String> selectedItems) {
-        super(activity, android.R.layout.simple_list_item_1,items );
+    public ProfileListAdapter(Activity activity, List<ProfileItem> items, List<ProfileItem> selectedItems) {
         this.items = items;
         this.selectedItems = selectedItems;
         this.activity = activity;
         checkBoxItems = new ArrayList<>();
     }
-
     @Override
-    public ProfileItem getItem(int position) {
-        return items.get(position);
+    public ProfileItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ProfileItemHolder(new ProfileViewItem(parent.getContext()));
     }
 
     @Override
-    public int getCount(){
-        return items.size();
+    public void onBindViewHolder(ProfileItemHolder holder,  final int position) {
 
-    }
+        View currFilter = ((ProfileViewItem) holder.itemView);
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        View v = convertView;
-        final ProfileItem currProfile = items.get(position);
-
-        if (v == null) {
-            if(currProfile.getName().equals("ADD PROFILE")){
-                LayoutInflater inflater = activity.getLayoutInflater();
-                v = inflater.inflate(R.layout.profile_item_add, null);
-            }else {
-                LayoutInflater inflater = activity.getLayoutInflater();
-                v = inflater.inflate(R.layout.profile_item, null);
-            }
-        }
+        ((ProfileViewItem) holder.itemView).displayName(items.get(position).getName());
+        ((ProfileViewItem) holder.itemView).displayCbox("SELECT", false);
 
 
-        final CheckBox checkboxItem = (CheckBox) v.findViewById(R.id.checkbox_profile);
-        checkboxItem.setText(currProfile.getName());
-
-        checkBoxItems.add(checkboxItem);
+        final CheckBox checkboxItem = ((ProfileViewItem) holder.itemView).getCheckBoxItem();
 
 
+        checkBoxItems.add(position, checkboxItem);
+
+
+        Log.d("position", String.valueOf(items.size()));
 
         checkboxItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(!checkboxItem.isChecked() && selectedItems.contains(checkboxItem.getText().toString())){
-                    selectedItems.remove(checkboxItem.getText().toString());
-
+                if (!checkboxItem.isChecked() && selectedItems.contains(items.get(position))) {
+                    selectedItems.remove(items.get(position));
+                } else if (checkboxItem.isChecked() && !selectedItems.contains(items.get(position))) {
+                    selectedItems.add(items.get(position));
                 }
-                else if(checkboxItem.isChecked() && !selectedItems.contains(checkboxItem.getText().toString())) {
-                    selectedItems.add(checkboxItem.getText().toString());
-
-                }
-
             }
         });
 
-        return v;
+        holder.cb.setChecked(selectedItems.contains(holder.tv.getText()));
     }
 
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 
-    public List<String> getSelectedItems(){
+    public List<ProfileItem> getSelectedItens() {
         return selectedItems;
     }
 
-    public void checkAll(){
-        for (CheckBox cb : checkBoxItems){
-            if (!cb.isChecked()) {
-                cb.setChecked(true);
-                if(!selectedItems.contains(cb.getText().toString())) selectedItems.add(cb.getText().toString());
-            }
 
-        }
-    }
-    public void uncheckAll(){
-        for (CheckBox cb : checkBoxItems){
-            if (cb.isChecked()) {
-                cb.setChecked(false);
-                if(selectedItems.contains(cb.getText().toString())) selectedItems.remove(cb.getText().toString());
-            }
+    public static class ProfileItemHolder extends RecyclerView.ViewHolder {
 
+        public CheckBox cb;
+        public TextView tv;
+
+        public ProfileItemHolder(View itemView) {
+            super(itemView);
+            cb = ((ProfileViewItem)itemView).getCheckBoxItem();
+            tv = ((ProfileViewItem)itemView).getTextViewItem();
         }
     }
 
-    public boolean allIschecked() {
-        return selectedItems.size() == 11;
-    }
-
-    public ArrayList<ProfileItem> getSelectedItens(){
-        ArrayList<ProfileItem> selected = new ArrayList<>();
-        if (selectedItems != null){
-            for (ProfileItem profile : items) {
-                if (selectedItems.contains(profile.getName())){
-                    selected.add(profile);
-                }
-            }
-        }
-        return selected;
-    }
 
 
 }
+
+
+
+

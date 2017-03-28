@@ -41,7 +41,7 @@ public class ProfilesFragment extends Fragment {
     private static ProfilesFragment fragment;
     public static final String TAG = "PROFILES_FRAGMENT";
     private List<ProfileItem> mProfiles;
-    private List<String> mSelectedProfiles;
+    private List<ProfileItem> mSelectedProfiles;
     private Button mTypeBtn;
     private Button mCuisineBtn;
 
@@ -133,13 +133,15 @@ public class ProfilesFragment extends Fragment {
 
         final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),mProfiles, mSelectedProfiles);
 
-        final GridView checkboxGridView = (GridView) view.findViewById(R.id.profile_grid_view);
+        final RecyclerView checkboxGridView = (RecyclerView) view.findViewById(R.id.profile_grid_view);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        checkboxGridView.setLayoutManager(llm);
         checkboxGridView.setAdapter(mAdapter);
 
         final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.user_settings_fab);
         modifyActioonBar();
 
-        checkboxGridView.setAdapter(mAdapter);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +168,7 @@ public class ProfilesFragment extends Fragment {
     }
 
 
-    private void createProfile(final GridView mGrid, final ProfileListAdapter mNAdapter) {
+    private void createProfile(final RecyclerView mGrid, final ProfileListAdapter mNAdapter) {
 
         List<String> filterIntoleranceListName = new ArrayList<>(Arrays.asList("Dairy", "Egg",
                 "Gluten", "Peanut", "Sesame", "Seafood", "Shellfish", "Soy", "Sulfite", "Tree", "Nut", "Wheat"));

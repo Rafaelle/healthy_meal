@@ -2,21 +2,71 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:clipToPadding="false"
 
-    <CheckBox
-        android:id="@+id/checkbox_profile"
-        android:layout_width="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="100dp"
+        android:elevation="3dp"
         android:padding="5dp"
-        android:layout_height="40dp"
-        android:layout_gravity="start"
-        android:drawableLeft="@drawable/checbox_profile_icon"
-        android:background="@drawable/bg_checkbox"
-        android:textColor="@drawable/checkbox_text_color"
-        android:textAlignment="center"
-        android:text="Profile"
-        android:textSize="15dp"
-        android:button="@null"
-        android:drawableRight="@drawable/checkbox_ck_icon" />
+        android:layout_height="150dp"
+        android:background="@drawable/rounded_background_recipe_list">
+
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_gravity="right"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/icon_im"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_person_pc"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="12dp"
+            android:text="nome"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_profile"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/icon_im"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:textSize="12dp"
+            android:drawableRight="@drawable/checkbox_ck_icon"
+            android:textColor="@drawable/checkbox_text_color"
+            android:background="@drawable/bg_checkbox"
+            android:textAlignment="center"
+            android:text="SELECT"
+            android:button="@null"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
 
 </RelativeLayout>
