@@ -12,26 +12,22 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name:"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:layout_alignParentLeft="true"
-            />
 
-        <EditText
-            android:id="@+id/name_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:layout_alignParentRight="true"
-            android:hint="Someone's name"
-            android:maxLines="1"
-            />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_ingredients"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
+                android:hint="Name"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
 
@@ -42,16 +38,28 @@
         android:gravity="center"
         android:textSize="15dp"
         android:text="Diets"
-        android:padding="10dp"
         android:layout_marginBottom="5dp"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/filter_list_diet"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_left"
+            android:layout_gravity="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filter_list_diet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/title_intolerance"
@@ -59,15 +67,30 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="15dp"
-        android:text="Intolerances"
-        android:padding="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:text="Intolerances" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/filter_list_intolerance"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="2"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" />
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_left"
+            android:layout_gravity="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filter_list_intolerance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+    </LinearLayout>
+
+
+
+
 </LinearLayout>

@@ -79,8 +79,10 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!checkboxItem.isChecked() && selectedItems.contains(items.get(position))) {
+                    checkboxItem.setText("SELECT");
                     selectedItems.remove(items.get(position));
                 } else if (checkboxItem.isChecked() && !selectedItems.contains(items.get(position))) {
+                    checkboxItem.setText("SELECTED");
                     selectedItems.add(items.get(position));
                 }
             }
@@ -88,6 +90,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
         holder.cb.setChecked(selectedItems.contains(items.get(position)));
     }
+
 
     @Override
     public int getItemCount() {

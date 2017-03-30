@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,6 +56,9 @@ public class ProfilesFragment extends Fragment {
 
     private List<String> selectedFilterTypeList;
     private List<String> selectedFilterCuisineList;
+
+    private RecyclerView checkboxGridView;
+    private ProfileListAdapter mAdapter;
 
 
     private List<String> selectedFilterIntoleranceList = new ArrayList<>();
@@ -119,9 +125,9 @@ public class ProfilesFragment extends Fragment {
         selectedFilterTypeList = new ArrayList<>();
         selectedFilterCuisineList = new ArrayList<>();
 
-        final ProfileListAdapter mAdapter = new ProfileListAdapter(getActivity(),((MainActivity)getActivity()).getProfiles(), mSelectedProfiles);
+        mAdapter = new ProfileListAdapter(getActivity(),((MainActivity)getActivity()).getProfiles(), mSelectedProfiles);
 
-        final RecyclerView checkboxGridView = (RecyclerView) view.findViewById(R.id.profile_grid_view);
+        checkboxGridView = (RecyclerView) view.findViewById(R.id.profile_grid_view);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
         checkboxGridView.setLayoutManager(llm);
@@ -145,7 +151,6 @@ public class ProfilesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                createProfile(checkboxGridView, mAdapter);
             }
         });
 
@@ -231,7 +236,7 @@ public class ProfilesFragment extends Fragment {
                 final GridView checkboxListView = (GridView) mView.findViewById(R.id.filter_list);
                 checkboxListView.setAdapter(mAdapter);
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Select recipe types")
+                        .setTitle("Select recipe type")
                         .setView(mView)
                         .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -277,7 +282,7 @@ public class ProfilesFragment extends Fragment {
 
                             }
                         })
-                        .setIcon(R.drawable.ic_cuisine_grey)
+                        .setIcon(R.drawable.ic_preparing_blue)
                         .show();
             }
         });
@@ -290,6 +295,25 @@ public class ProfilesFragment extends Fragment {
     public void onResume() {
         modifyActioonBar();
         super.onResume();
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.next_button) {
+            createProfile(checkboxGridView, mAdapter);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.next_button_action_bar, menu);
     }
 
     /**
@@ -298,7 +322,7 @@ public class ProfilesFragment extends Fragment {
     private void modifyActioonBar() {
         android.support.v7.app.ActionBar mActionbar = ((MainActivity) this.getActivity()).getSupportActionBar();
         mActionbar.setTitle(R.string.app_name);
-        mActionbar.setElevation(0);
+        mActionbar.setElevation(2);
         mActionbar.setDisplayHomeAsUpEnabled(false);//if true displays the left menu
     }
 

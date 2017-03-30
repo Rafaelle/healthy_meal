@@ -9,15 +9,16 @@
         android:id="@+id/icon_im"
         android:layout_width="wrap_content"
         android:padding="5dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:background="@drawable/rounded_bg_filter_icon"/>
 
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="match_parent"
-        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_toRightOf="@+id/icon_im"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_gravity="start"
         android:drawableRight="@drawable/checkbox_ck_icon"
         android:background="@drawable/bg_checkbox_filter"
