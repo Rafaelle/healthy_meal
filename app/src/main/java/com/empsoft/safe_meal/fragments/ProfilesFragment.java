@@ -1,6 +1,7 @@
 package com.empsoft.safe_meal.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -196,17 +197,7 @@ public class ProfilesFragment extends Fragment {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    if (nameRestrictions(mName.getText().toString())){
-                        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                        // NOTE: In the author's example, he uses an identifier
-                        // called searchBar. If setting this code on your EditText
-                        // then use v.getWindowToken() as a reference to your
-                        // EditText is passed into this callback as a TextView
-
-                        in.hideSoftInputFromWindow(searchBar.getApplicationWindowToken(),
-                                InputMethodManager.HIDE_NOT_ALWAYS);
-                    }
+                    nameRestrictions(mName.getText().toString());
 
                     return true;
                 }
