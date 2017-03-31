@@ -1,5 +1,6 @@
 package com.empsoft.safe_meal.fragments;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,15 +9,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.empsoft.safe_meal.MainActivity;
@@ -186,6 +190,29 @@ public class ProfilesFragment extends Fragment {
         final View mView = View.inflate(getActivity(), R.layout.fragment_create_profile, null);
 
         final EditText mName = (EditText) mView.findViewById(R.id.name_input);
+        mName.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    if (nameRestrictions(mName.getText().toString())){
+                        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                        // NOTE: In the author's example, he uses an identifier
+                        // called searchBar. If setting this code on your EditText
+                        // then use v.getWindowToken() as a reference to your
+                        // EditText is passed into this callback as a TextView
+
+                        in.hideSoftInputFromWindow(searchBar.getApplicationWindowToken(),
+                                InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -208,12 +235,14 @@ public class ProfilesFragment extends Fragment {
                 .setView(mView)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        selectedFilterDietList = mDietAdapter.getSelectedItems();
-                        selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
-                        Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
-                        ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
-                        ((MainActivity) getActivity()).addProfile(mProfile);
-                        mGrid.setAdapter(mNAdapter);
+                        if (nameRestrictions(mName.getText().toString())){
+                            selectedFilterDietList = mDietAdapter.getSelectedItems();
+                            selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
+                            Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
+                            ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
+                            ((MainActivity) getActivity()).addProfile(mProfile);
+                            mGrid.setAdapter(mNAdapter);
+                        }
 
                     }
                 })
@@ -340,6 +369,33 @@ public class ProfilesFragment extends Fragment {
             System.out.println(temp);
         }
         return set;
+    }
+
+    private boolean nameRestrictions(String ingredient){
+        ingredient = ingredient.trim();
+
+        if (ingredient==null || ingredient.equals("")){
+            Toast.makeText(getContext(), R.string.empty_name, Toast.LENGTH_SHORT).show();
+            return false;
+        } if (ingredient.matches(".*\\d.*")){
+            Toast.makeText(getContext(), R.string.contain_number, Toast.LENGTH_SHORT).show();
+            return false;
+        }/* if (ingredient.matches(".*\\W.*") ){
+            Toast.makeText(getContext(), R.string.contain_metacharacter, Toast.LENGTH_SHORT).show();
+            return false;
+        }*/
+        return  true;
+    }
+
+    private void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

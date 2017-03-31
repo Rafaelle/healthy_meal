@@ -11,5 +11,7 @@
     <!-- TOAST -->
     <string name="not_ready">Sorry, not ready yet :\'(</string>
     <string name="wait">Wait .....  :)</string>
+    <string name="empty_name">Can not add an empty name :(</string>
+    <string name="contain_number">The name can not contain numbers</string>
 
 </resources>
