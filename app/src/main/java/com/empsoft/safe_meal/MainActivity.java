@@ -120,9 +120,10 @@ public class MainActivity extends AppCompatActivity {
         String cuisine, String diet, String excludeIngredients,String intolerances,
                 Integer number, String query, String type*/
         String query = "";
-
-        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getIntolerances(), getExcludeIngredients(),
-                getDiets(), numberResult,query, getRecipeFilters());
+        Log.d("RESULT:", getDiets().toString());
+        Log.d("INTO:", getIntolerances().toString());
+        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getDiets(), getExcludeIngredients(),
+                getIntolerances(), numberResult,query, getRecipeFilters());
         //complexSearchMapper.setLimitLicense(false);
         //complexSearchMapper.setNumber(5);
 
