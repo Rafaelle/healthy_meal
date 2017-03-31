@@ -229,7 +229,7 @@ public class ProfilesFragment extends Fragment {
                         if (nameRestrictions(mName.getText().toString())){
                             selectedFilterDietList = mDietAdapter.getSelectedItems();
                             selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
-                            Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterDietList), ListToSet(selectedFilterIntoleranceList), null);
+                            Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
                             ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
                             ((MainActivity) getActivity()).addProfile(mProfile);
                             mGrid.setAdapter(mNAdapter);
