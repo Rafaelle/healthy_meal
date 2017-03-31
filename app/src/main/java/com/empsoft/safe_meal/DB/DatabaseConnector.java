@@ -40,11 +40,12 @@ public class DatabaseConnector{
 
     // insert (Add), update (Edit) and delete do not require any display so no cursor returned (in either case there is a return to the "intenting" Activity as soon as Save/Delete(after confirm dialog) button pressed
     // inserts a new profile in the database
-    public void insertProfile(long id, String name){
+    public void insertProfile(String name, String diet, String intolerance){
         ContentValues newProfile = new ContentValues(); // required as parameter type by SQLiteDatabase.insert(...) - key/value data structure
 
-        newProfile.put("id", id);
         newProfile.put("name", name);
+        newProfile.put("diet", diet);
+        newProfile.put("intolerance", intolerance);
 
         open(); 											// open()coded above
         database.insert("profiles", null, newProfile);	// parameters: table, not used here (has to do with inserting empty records), ContentValues object
@@ -52,10 +53,12 @@ public class DatabaseConnector{
     }
 
     // updates an existing contact in the database
-    public void updateContact(long id, String name){
+    public void updateProfile(long id, String name, String diet, String intolerance){
         ContentValues editProfile = new ContentValues(); // required as parameter type by SQLiteDatabase.update(...) - key/value data structure
 
         editProfile.put("name", name);
+        editProfile.put("diet", diet);
+        editProfile.put("intolerance", intolerance);
 
         open();
         database.update("profiles", editProfile, "_id=" + id, null); // parameters: table, ContentValues object, where clause, where arguments (not used here but allows compound where conditions)
@@ -63,7 +66,7 @@ public class DatabaseConnector{
     }
 
     // delete the contact specified by the given String name
-    public void deleteContact(long id){
+    public void deleteProfile(long id){
         open();
         // parameters: table, where clause without where, ...
         database.delete("profiles", "_id=" + id, null); // parameters:
@@ -101,7 +104,7 @@ public class DatabaseConnector{
             String createQuery =
                     "CREATE TABLE profiles" +
                             "(_id integer primary key autoincrement," +
-                            "name TEXT);";
+                            "name TEXT, diet TEXT, intolerace TEXT);";
 
             db.execSQL(createQuery);
         }
