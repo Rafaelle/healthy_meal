@@ -22,11 +22,19 @@ public class ProfileItemDB {
 
     public ProfileItemDB(String name, DietDB diet, int id) {
         this.name = name;
-        this.diet = diet;
+        if (diet == null){
+            this.diet = new DietDB(name);
+        } else {
+            this.diet = diet;
+        }
         this.id = id;
     }
     public DietDB getDiet() {
         return diet;
+    }
+
+    public  Diet getDietR(){
+        return new Diet(this.name, diet.getIntolerances(), diet.getDiets(), diet.getExcludeIngredients());
     }
 
     public String getName() {

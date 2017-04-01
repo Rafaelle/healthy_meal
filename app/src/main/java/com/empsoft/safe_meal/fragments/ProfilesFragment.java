@@ -26,6 +26,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.empsoft.safe_meal.DB.DBUtils;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.FilterListAdapter;
@@ -35,8 +36,10 @@ import com.empsoft.safe_meal.models.Diet;
 
 import com.empsoft.safe_meal.DB.DatabaseConnector;
 
+import com.empsoft.safe_meal.models.DietDB;
 import com.empsoft.safe_meal.models.FilterItem;
 import com.empsoft.safe_meal.models.ProfileItem;
+import com.empsoft.safe_meal.models.ProfileItemDB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +78,7 @@ public class ProfilesFragment extends Fragment {
 
     private EditText mName;
     private Diet mDiet;
+    private DietDB dietDB;
 
     public ProfilesFragment() {
         // Required empty public constructor
@@ -147,7 +151,7 @@ public class ProfilesFragment extends Fragment {
 
         final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.search_fab);
         modifyActioonBar();
-
+        searchBtn.setClickable(true);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +159,7 @@ public class ProfilesFragment extends Fragment {
                 ((MainActivity) getActivity()).setSelectedProfiles(mAdapter.getSelectedItens());
                 Toast.makeText(getContext(), R.string.wait, Toast.LENGTH_LONG).show();
                 ((MainActivity)getActivity()).complexSearch();
+                searchBtn.setClickable(false);
             }
         });
         final Button addUser = (Button) view.findViewById(R.id.add_user);
@@ -233,13 +238,30 @@ public class ProfilesFragment extends Fragment {
                 .setView(mView)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        //Verifica se e nulo, vazio ou contém números
                         if (nameRestrictions(mName.getText().toString())){
                             selectedFilterDietList = mDietAdapter.getSelectedItems();
                             selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
                             mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
                             ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
-                            ((MainActivity) getActivity()).addProfile(mProfile);
-                            mGrid.setAdapter(mNAdapter);
+
+                            dietDB = new DietDB(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
+
+                            ProfileItemDB profileItem = new ProfileItemDB(mName.getText().toString(), dietDB);
+
+                            Log.d(TAG, "id"+ profileItem.getId());
+
+                            if(DBUtils.addProfile(getContext(), profileItem)){
+                                ((MainActivity) getActivity()).addProfile(mProfile);
+                                mGrid.setAdapter(mNAdapter);
+                                Toast.makeText(getContext(), R.string.add_profile, Toast.LENGTH_SHORT).show();
+
+                            } else{
+                                Toast.makeText(getContext(), R.string.error_add_in_DB, Toast.LENGTH_SHORT).show();
+
+                            }
+
+/*
 
 
                             if (mName.getText().length() != 0){ // will only save if name at least is present
@@ -268,7 +290,7 @@ public class ProfilesFragment extends Fragment {
                                 //builder.setMessage(R.string.errorMessage);
                                 //builder.setPositiveButton(R.string.errorButton, null);
                                 //builder.show(); // display the Dialog
-                            }
+                            } */
                         }
 
                     }

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PointF;
+import android.util.Log;
 
 import com.empsoft.safe_meal.models.Diet;
 import com.empsoft.safe_meal.models.DietDB;
@@ -23,6 +24,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class DBUtils {
+    public static final String TAG = "DBUtils";
+
     public static SQLiteDatabase getReadableDatabase(Context context) {
         DBOpenHelper openHelper = new DBOpenHelper(context);
         return openHelper.getReadableDatabase();
@@ -34,16 +37,42 @@ public class DBUtils {
     }
 
     public static boolean addProfile(Context context, ProfileItemDB profileItem){
+        String nameProfile = getNameProfileById(context, profileItem.getId());
+        Boolean addIntolerance = false;
+        Boolean addDiet = false;
+
+        addIntolerance = addIntolerance(context,profileItem.getDiet().getIntolerances(), profileItem.getId());
+        addDiet = addDiet(context, profileItem.getDiet().getDiets(), profileItem.getId());
+/*
+        if (nameProfile != null){
+            Log.d(TAG, "Não existe o perfil");
+            addIntolerance = addIntolerance(context,profileItem.getDiet().getIntolerances(), profileItem.getId());
+            addDiet = addDiet(context, profileItem.getDiet().getDiets(), profileItem.getId());
+        }
+*/
         SQLiteDatabase db = getWritableDatabase(context);
         Table profileTable = DBOpenHelper.getProfileTable();
+
         boolean result = false;
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            if (getIdProfileByName(context, profileItem.getName()) != -1){
 
-                if (addIntolerance(context,profileItem.getDiet().getIntolerances(), profileItem.getId()) &&
-                addDiet(context, profileItem.getDiet().getDiets(), profileItem.getId())){
+            if (addIntolerance && addDiet) {
+
+                ContentValues values = new ContentValues();
+                values.put("id", profileItem.getId());
+                values.put("name", profileItem.getName());
+
+                db.insert(profileTable.getName(), null, values);
+                db.setTransactionSuccessful();
+                result = true;
+            }
+
+            /*
+            if ( nameProfile != null){
+
+                if (addIntolerance && addDiet){
 
                     ContentValues values = new ContentValues();
                     values.put("id", profileItem.getId());
@@ -53,7 +82,7 @@ public class DBUtils {
                     db.setTransactionSuccessful();
                     result = true;
                 }
-            }
+            }*/
         } finally {
             db.endTransaction();
         }
@@ -62,6 +91,8 @@ public class DBUtils {
     }
 
     private static boolean addIntolerance(Context context, Set<String> intolerances, int id) {
+        HashSet<String> intolerancesTB = getDietById(context, id);
+
         SQLiteDatabase db = getWritableDatabase(context);
         Table dietTable = DBOpenHelper.getIntoleranceTable();
         boolean result = false;
@@ -69,7 +100,6 @@ public class DBUtils {
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            HashSet<String> intolerancesTB = getDietById(context, id);
             for (String intolerance : intolerances) {
                 if (!intolerancesTB.contains(intolerance)){
                     ContentValues values = new ContentValues();
@@ -91,6 +121,8 @@ public class DBUtils {
     }
 
     private static boolean addDiet(Context context, Set<String> diets, int id) {
+        HashSet<String> dietsTB = getIntolerancesById(context, id);
+
         SQLiteDatabase db = getWritableDatabase(context);
         Table dietTable = DBOpenHelper.getDietTable();
         boolean result = false;
@@ -98,7 +130,6 @@ public class DBUtils {
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            HashSet<String> dietsTB = getIntolerancesById(context, id);
             for (String diet : diets) {
                 if (!dietsTB.contains(diet)){
                     ContentValues values = new ContentValues();
@@ -106,7 +137,6 @@ public class DBUtils {
                     values.put("diet", diet);
                     db.insert(dietTable.getName(), null, values);
                 }
-
             }
             db.setTransactionSuccessful();
             result = true;
@@ -125,18 +155,17 @@ public class DBUtils {
         String[] args = {profileName};
 
         Cursor c = db.rawQuery("SELECT id FROM profile WHERE name = ?", args);
-        int idx = c.getColumnIndex("id");
-
         int id = -1;
 
-        if (c != null){
-            if (c.moveToFirst()){
-                id = c.getInt(idx);
-            }
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            id = c.getInt(c.getColumnIndex("id"));
+            c.moveToNext();
         }
 
         c.close();
         db.close();
+        Log.d(TAG, String.valueOf(id));
         return id;
     }
 
@@ -145,15 +174,15 @@ public class DBUtils {
 
         String[] args = {String.valueOf(id)};
         Cursor c = db.rawQuery("SELECT name FROM profile WHERE id = ?", args);
-        int idx = c.getColumnIndex("name");
 
         String name = null;
 
-        if (c != null){
-            if (c.moveToFirst()){
-                name = c.getString(idx);
-            }
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            name = c.getString(c.getColumnIndex("name"));
+            c.moveToNext();
         }
+
         c.close();
         db.close();
         return name;
@@ -162,6 +191,7 @@ public class DBUtils {
     private static HashSet<String> getIntolerancesById(Context context, int id) {
         SQLiteDatabase db = getReadableDatabase(context);
         HashSet<String> intolerances = new HashSet<>();
+
         String[] args = {String.valueOf(id)};
 
         Cursor c = db.rawQuery("SELECT intolerance FROM intolerance WHERE id = ?", args);
@@ -197,16 +227,24 @@ public class DBUtils {
 
 
     public static boolean updateProfile(Context context, ProfileItemDB profileItem){
+        String nameProfile = getNameProfileById(context, profileItem.getId());
+        Boolean updateIntolerance = false;
+        Boolean upDiet = false;
+
+        if (nameProfile != null){
+           updateIntolerance = updateIntolerances(context, (HashSet<String>) profileItem.getDiet().getIntolerances(), profileItem.getId());
+           upDiet = updateDiets(context, (HashSet<String>) profileItem.getDiet().getDiets(), profileItem.getId());
+        }
+
         SQLiteDatabase db = getWritableDatabase(context);
         Table profileTable = DBOpenHelper.getProfileTable();
         boolean result = false;
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            if (getNameProfileById(context, profileItem.getId())!= null){
+            if (nameProfile != null){
 
-                if (updateIntolerances(context, (HashSet<String>) profileItem.getDiet().getIntolerances(), profileItem.getId()) &&
-                        updateDiets(context, (HashSet<String>) profileItem.getDiet().getDiets(), profileItem.getId())){
+                if ( updateIntolerance && upDiet){
 
                     ContentValues values = new ContentValues();
                     values.put("id", profileItem.getId());
@@ -225,21 +263,22 @@ public class DBUtils {
     }
 
     private static boolean updateIntolerances(Context context, HashSet<String> intolerances, int id){
+        HashSet<String> intolerancesList = getIntolerancesById(context, id);
+
         SQLiteDatabase db = getWritableDatabase(context);
         Table intolerancesTable = DBOpenHelper.getIntoleranceTable();
         boolean result = false;
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            HashSet<String> intolerancesList = getIntolerancesById(context, id);
 
             for (String intolerance : intolerancesList) {
                 //caso a intolerância já existente no banco do perfil determinado não exista mais a atualização, deleta.
                 if (!(intolerances.contains(intolerance))) {
-
                     db.delete(intolerancesTable.getName(),"intolerance = ? AND id = ?, ", new String[]{intolerance, String.valueOf(id)});
                 }
             }
+
             for (String intolerance : intolerances) {
                 //caso a intolerância não exista nas intolerâncias já existentes no banco do perfil, adiciona.
                 if (!(intolerancesList.contains(intolerance))){
@@ -262,18 +301,18 @@ public class DBUtils {
     }
 
     private static boolean updateDiets(Context context, HashSet<String> diets, int id){
+        HashSet<String> dietsList = getDietById(context, id);
+
         SQLiteDatabase db = getWritableDatabase(context);
         Table dietsTable = DBOpenHelper.getDietTable();
         boolean result = false;
         // inicia a transação no banco
         db.beginTransaction();
         try {
-            HashSet<String> dietsList = getDietById(context, id);
 
             for (String diet : dietsList) {
                 //caso a intolerância já existente no banco do perfil determinado não exista mais a atualização, deleta.
                 if (!(diets.contains(diet))) {
-
                     db.delete(dietsTable.getName(),"diet = ? AND id = ?, ", new String[]{diet, String.valueOf(id)});
                 }
             }
@@ -309,21 +348,18 @@ public class DBUtils {
     }
 
     public static ProfileItemDB getProfileById(Context context, int id){
+        String name = null;
+        HashSet<String> intolerances = getIntolerancesById(context,id);
+        HashSet<String> diets = getDietById(context,id);
+
         SQLiteDatabase db = getReadableDatabase(context);
 
         String[] args = {String.valueOf(id)};
         Cursor c = db.rawQuery("SELECT name FROM profile WHERE id = ?", args);
 
-        String name = null;
-        HashSet<String> intolerances = new HashSet<>();
-        HashSet<String> diets = new HashSet<>();
-
-
         if (c != null){
             if (c.moveToFirst()){
                 name = c.getString(c.getColumnIndex("name"));
-                intolerances = getIntolerancesById(context,id);
-                diets = getDietById(context,id);
             }
         }
         c.close();
@@ -347,10 +383,8 @@ public class DBUtils {
 
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            DietDB diet = new DietDB(c.getString(nameIndex), getIntolerancesById(context,c.getInt(idIndex)),
-                        getDietById(context, c.getInt(idIndex)), null);
 
-            ProfileItemDB prof = new ProfileItemDB(c.getString(nameIndex),diet,c.getInt(idIndex));
+            ProfileItemDB prof = new ProfileItemDB(c.getString(nameIndex),null,c.getInt(idIndex));
             profiles.add(prof);
 
             c.moveToNext();
@@ -358,6 +392,14 @@ public class DBUtils {
 
         c.close();
         db.close();
+
+        for (ProfileItemDB profile : profiles) {
+            HashSet<String> intolerances = getIntolerancesById(context, profile.getId());
+            HashSet<String> diets = getDietById(context,profile.getId());
+
+            DietDB diet = new DietDB(profile.getName(), intolerances, diets, null);
+            profile.setDiet(diet);
+        }
 
         return profiles;
     }
