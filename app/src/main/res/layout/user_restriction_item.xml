@@ -10,7 +10,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_person_pc"
-        android:background="@drawable/rounded_bg_recipe_img"/>
+        android:background="@drawable/bg_oval_restriction"/>
     <TextView
         android:layout_width="70dp"
         android:layout_gravity="center"

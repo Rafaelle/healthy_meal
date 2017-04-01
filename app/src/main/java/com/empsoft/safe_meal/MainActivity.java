@@ -63,15 +63,7 @@ public class MainActivity extends AppCompatActivity {
         spoonacularService = new SpoonacularService(getString(R.string.SPOONACULATOR_API_KEY));
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
 
-        mProfiles = new ArrayList<>(Arrays.asList(
-                //      new ProfileItem("ADD PROFILE", null),
-                new ProfileItem("Samir", new Diet()),
-                new ProfileItem("Martha", new Diet()),
-                new ProfileItem("Rafaelle", new Diet()),
-                new ProfileItem("Luiza", new Diet()),
-                new ProfileItem("Igor", new Diet()),
-                new ProfileItem("Khelvin", new Diet())
-              ));
+        mProfiles = new ArrayList<>();
     }
     public void changeFragment(Fragment frag, String tag, boolean saveInBackstack) {
 
