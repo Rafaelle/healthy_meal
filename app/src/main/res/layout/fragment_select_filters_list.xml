@@ -13,7 +13,6 @@
         android:layout_weight="1">
         <LinearLayout
             android:id="@+id/filter_layout"
-            android:layout_below="@+id/filter_tv"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
