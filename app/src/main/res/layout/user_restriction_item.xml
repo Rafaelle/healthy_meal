@@ -7,8 +7,8 @@
         android:id="@+id/ib_intolerances"
         android:layout_gravity="center"
         android:padding="10dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/ic_person_pc"
         android:background="@drawable/bg_oval_restriction"/>
     <TextView

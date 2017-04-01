@@ -43,8 +43,8 @@ public class RestrictionListAdapter extends RecyclerView.Adapter<RestrictionList
     public void onBindViewHolder(final FilterItemHolder holder, final int position) {
         View currFilter = ((FilterRestrictionItem) holder.itemView);
         this.holder = holder;
-        ((FilterRestrictionItem) holder.itemView).displayImg(items.get(position).getIcon());
-        ((FilterRestrictionItem) holder.itemView).displayCbox(items.get(position).getNome(), false);
+        ((FilterRestrictionItem) holder.itemView).displayCbox(items.get(position).getIcon());
+        ((FilterRestrictionItem) holder.itemView).displayText(items.get(position).getNome());
 
 
         final CheckBox checkboxItem = ((FilterRestrictionItem) holder.itemView).getCheckBoxItem();

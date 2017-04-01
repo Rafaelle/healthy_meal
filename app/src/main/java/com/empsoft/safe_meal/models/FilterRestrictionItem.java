@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,13 +30,15 @@ public class FilterRestrictionItem extends FrameLayout{
         LayoutInflater.from(context).inflate(R.layout.filter_list_create_profile_item, this);
     }
 
-    public void displayImg(int icon) {
-        ((ImageView)findViewById(R.id.icon_im)).setImageResource(icon);
+    public void displayText(String name) {
+        ((TextView)findViewById(R.id.restriction_name)).setText(name);
+        ((CheckBox)findViewById(R.id.checkbox)).setText(name);
+
 
     }
-    public void displayCbox(String text, boolean ischeked) {
-        ((CheckBox)findViewById(R.id.checkbox)).setText(text);
-        setChecked(ischeked);
+    public void displayCbox(int icon) {
+        ((ImageButton)findViewById(R.id.icon_im)).setImageResource(icon);
+
 
     }
 
