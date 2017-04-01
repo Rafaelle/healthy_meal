@@ -176,6 +176,7 @@ public class Diet implements Parcelable {
     }
 
     public static int getIconByName(String iconName){
+
         switch (iconName){
             case "Dairy": return R.drawable.ic_dairy;
             case "Egg": return R.drawable.ic_egg;
@@ -189,6 +190,13 @@ public class Diet implements Parcelable {
             case "Tree": return R.drawable.ic_tree;
             case "Nut": return R.drawable.ic_nut;
             case "Wheat": return R.drawable.ic_wheat;
+            case "Pescetarian": return R.drawable.ic_pescetarian;
+            case "Lacto Vegetarian": return R.drawable.ic_lacto_vegetarian;
+            case "Ovo Vegetarian": return R.drawable.ic_ovo_vegetarian;
+            case "Vegan": return R.drawable.ic_vegan;
+            case "Paleo": return R.drawable.ic_paleo;
+            case "Primal": return R.drawable.ic_primal;
+            case "Vegetarian": return R.drawable.ic_vegetarian;
             default: return  R.drawable.ic_diet;
 
         }

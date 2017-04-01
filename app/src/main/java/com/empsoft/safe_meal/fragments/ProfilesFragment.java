@@ -180,9 +180,9 @@ public class ProfilesFragment extends Fragment {
                 R.drawable.ic_tree, R.drawable.ic_nut, R.drawable.ic_wheat
         };
 
-        int[] filterDietListIcon = new int[]{R.drawable.ic_diet, R.drawable.ic_diet,
-                R.drawable.ic_diet, R.drawable.ic_diet, R.drawable.ic_diet,
-                R.drawable.ic_diet, R.drawable.ic_diet,
+        int[] filterDietListIcon = new int[]{R.drawable.ic_pescetarian, R.drawable.ic_lacto_vegetarian,
+                R.drawable.ic_ovo_vegetarian, R.drawable.ic_vegan, R.drawable.ic_paleo,
+                R.drawable.ic_primal, R.drawable.ic_vegetarian
         };
 
         List<FilterItem> filterDietList = addItens(filterDietListName, filterDietListIcon);
