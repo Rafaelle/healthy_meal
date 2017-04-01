@@ -208,6 +208,8 @@ public class ProfilesFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+
                     // Perform action on key press
                     nameRestrictions(mName.getText().toString());
 
@@ -304,6 +306,19 @@ public class ProfilesFragment extends Fragment {
                 .setIcon(R.drawable.ic_add_user)
                 .show();
     }
+
+
+    private void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
     // saves contact information to the database
     // no parameters required as ADD doesn't need them, and EDIT uses the class level rowID set in onCreate
@@ -459,15 +474,6 @@ public class ProfilesFragment extends Fragment {
         return  true;
     }
 
-    private void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
 
 }
