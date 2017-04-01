@@ -53,8 +53,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static Table getIntoleranceTable() {
         if (intoleranceTable == null) {
             intoleranceTable = new Table("intolerance")
-                    .addColumn(new Table.Column("id", "INTEGER"))
-                    .addColumn(new Table.Column("intolerance", "STRING"))
+                    .addColumn(new Table.Column("id", "INTEGER", true))
+                    .addColumn(new Table.Column("intolerance", "STRING", true  ))
                     .addForeignKey(new Table.ForeignKey(getProfileTable().getName())
                             .addReference("id", "id")
                     );
@@ -65,8 +65,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static Table getDietTable() {
         if (dietTable == null) {
             dietTable = new Table("diet")
-                    .addColumn(new Table.Column("id", "INTEGER"))
-                    .addColumn(new Table.Column("diet", "STRING"))
+                    .addColumn(new Table.Column("id", "INTEGER", true))
+                    .addColumn(new Table.Column("diet", "STRING", true))
                     .addForeignKey(new Table.ForeignKey(getProfileTable().getName())
                             .addReference("id", "id")
                     );

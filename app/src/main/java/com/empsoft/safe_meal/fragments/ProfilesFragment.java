@@ -252,7 +252,9 @@ public class ProfilesFragment extends Fragment {
                             Log.d(TAG, "id"+ profileItem.getId());
 
                             if(DBUtils.addProfile(getContext(), profileItem)){
-                                ((MainActivity) getActivity()).addProfile(mProfile);
+                                //((MainActivity) getActivity()).addProfile(mProfile);
+                                //mGrid.setAdapter(mNAdapter);
+                                ((MainActivity)getActivity()).setmProfilesDB(DBUtils.getAllProfiles(getContext()));
                                 mGrid.setAdapter(mNAdapter);
                                 Toast.makeText(getContext(), R.string.add_profile, Toast.LENGTH_SHORT).show();
 
@@ -262,7 +264,6 @@ public class ProfilesFragment extends Fragment {
                             }
 
 /*
-
 
                             if (mName.getText().length() != 0){ // will only save if name at least is present
                                 // none of AsyncTask's generic parameters are used

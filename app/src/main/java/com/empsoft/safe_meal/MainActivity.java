@@ -50,6 +50,19 @@ public class MainActivity extends AppCompatActivity {
     private GeneralRecipe generalRecipeSelected;
 
     private ArrayList<ProfileItem> mProfiles;
+
+    public ArrayList<ProfileItemDB> getmProfilesDB() {
+        return mProfilesDB;
+    }
+
+    public void setmProfilesDB(ArrayList<ProfileItemDB> profilesDB) {
+        this.mProfilesDB = profilesDB;
+        mProfiles.clear();
+        for (ProfileItemDB profile : profilesDB) {
+            mProfiles.add(new ProfileItem(profile.getName(), profile.getDietR(),profile.getId()));
+        }
+    }
+
     private ArrayList<ProfileItemDB> mProfilesDB;
 
     @Override
@@ -67,12 +80,10 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
 
         mProfiles = new ArrayList<>();
-        mProfilesDB = DBUtils.getAllProfiles(getBaseContext());
+        setmProfilesDB(DBUtils.getAllProfiles(getBaseContext()));
 
-        for (ProfileItemDB profile : mProfilesDB) {
-            mProfiles.add(new ProfileItem(profile.getName(), profile.getDietR(),profile.getId()));
-        }
     }
+
     public void changeFragment(Fragment frag, String tag, boolean saveInBackstack) {
 
         try {
