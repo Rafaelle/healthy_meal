@@ -11,6 +11,7 @@ import android.util.Log;
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
 import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.fragments.RecipeListFragment;
+import com.empsoft.safe_meal.models.Diet;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
@@ -62,25 +63,8 @@ public class MainActivity extends AppCompatActivity {
         spoonacularService = new SpoonacularService(getString(R.string.SPOONACULATOR_API_KEY));
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
 
-        mProfiles = new ArrayList<>(Arrays.asList(
-                //      new ProfileItem("ADD PROFILE", null),
-                new ProfileItem("Samir", null),
-                new ProfileItem("Martha", null),
-                new ProfileItem("Rafaelle", null),
-                new ProfileItem("Luiza", null),
-                new ProfileItem("Igor", null),
-                new ProfileItem("Khelvin", null),
-                new ProfileItem("Maria", null)));
+        mProfiles = new ArrayList<>();
     }
-
-    /**
-     * Change the current displayed fragment by a new one.
-     * - if the fragment is in backstack, it will pop it
-     * - if the fragment is already displayed (trying to change the fragment with the same), it will not do anything
-     *
-     * @param frag            the new fragment to display
-     * @param saveInBackstack if we want the fragment to be in backstack
-     */
     public void changeFragment(Fragment frag, String tag, boolean saveInBackstack) {
 
         try {
@@ -121,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 Integer number, String query, String type*/
         String query = "";
 
-        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getIntolerances(), getExcludeIngredients(),
-                getDiets(), numberResult,query, getRecipeFilters());
+        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getDiets(), getExcludeIngredients(),
+                getIntolerances(), numberResult,query, getRecipeFilters());
         //complexSearchMapper.setLimitLicense(false);
         //complexSearchMapper.setNumber(5);
 

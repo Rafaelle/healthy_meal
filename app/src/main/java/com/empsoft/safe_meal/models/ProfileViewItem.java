@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,11 +48,17 @@ public class ProfileViewItem extends FrameLayout {
     }
 
 
+
+
     public CheckBox getCheckBoxItem(){
         return ((CheckBox)findViewById(R.id.checkbox_profile));
     }
 
     public TextView getTextViewItem() {
         return ((TextView)findViewById(R.id.profile_name));
+    }
+
+    public ImageButton getUserbtn() {
+        return ((ImageButton)findViewById(R.id.icon_im));
     }
 }
