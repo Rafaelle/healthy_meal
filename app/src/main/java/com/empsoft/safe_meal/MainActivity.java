@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.empsoft.safe_meal.DB.DBUtils;
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
 import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.fragments.RecipeListFragment;
 import com.empsoft.safe_meal.models.Diet;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
+import com.empsoft.safe_meal.models.ProfileItemDB;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructionsMapper;
 import com.empsoft.safe_meal.services.retrofit_models.ComplexSearchMapper;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private GeneralRecipe generalRecipeSelected;
 
     private ArrayList<ProfileItem> mProfiles;
+    private ArrayList<ProfileItemDB> mProfilesDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(mProfilesFragment, ProfilesFragment.TAG, true);
 
         mProfiles = new ArrayList<>();
+        mProfilesDB = DBUtils.getAllProfiles(getBaseContext());
+
+        for (ProfileItemDB profile : mProfilesDB) {
+            mProfiles.add(new ProfileItem(profile.getName(), profile.getDietR(),profile.getId()));
+        }
     }
     public void changeFragment(Fragment frag, String tag, boolean saveInBackstack) {
 

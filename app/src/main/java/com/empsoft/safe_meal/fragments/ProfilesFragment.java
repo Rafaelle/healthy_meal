@@ -3,6 +3,7 @@ package com.empsoft.safe_meal.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +26,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.empsoft.safe_meal.DB.DBUtils;
 import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
 import com.empsoft.safe_meal.adapters.FilterListAdapter;
@@ -31,8 +34,12 @@ import com.empsoft.safe_meal.adapters.ProfileListAdapter;
 import com.empsoft.safe_meal.adapters.RestrictionListAdapter;
 import com.empsoft.safe_meal.models.Diet;
 
+import com.empsoft.safe_meal.DB.DatabaseConnector;
+
+import com.empsoft.safe_meal.models.DietDB;
 import com.empsoft.safe_meal.models.FilterItem;
 import com.empsoft.safe_meal.models.ProfileItem;
+import com.empsoft.safe_meal.models.ProfileItemDB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +75,10 @@ public class ProfilesFragment extends Fragment {
 
     private List<String> selectedFilterIntoleranceList = new ArrayList<>();
     private List<String> selectedFilterDietList = new ArrayList<>();
+
+    private EditText mName;
+    private Diet mDiet;
+    private DietDB dietDB;
 
     public ProfilesFragment() {
         // Required empty public constructor
@@ -140,7 +151,7 @@ public class ProfilesFragment extends Fragment {
 
         final FloatingActionButton searchBtn = (FloatingActionButton) view.findViewById(R.id.search_fab);
         modifyActioonBar();
-
+        searchBtn.setClickable(true);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +159,7 @@ public class ProfilesFragment extends Fragment {
                 ((MainActivity) getActivity()).setSelectedProfiles(mAdapter.getSelectedItens());
                 Toast.makeText(getContext(), R.string.wait, Toast.LENGTH_LONG).show();
                 ((MainActivity)getActivity()).complexSearch();
+                searchBtn.setClickable(false);
             }
         });
         final Button addUser = (Button) view.findViewById(R.id.add_user);
@@ -190,7 +202,7 @@ public class ProfilesFragment extends Fragment {
 
         final View mView = View.inflate(getActivity(), R.layout.fragment_create_profile, null);
 
-        final EditText mName = (EditText) mView.findViewById(R.id.name_input);
+        mName = (EditText) mView.findViewById(R.id.name_input);
         mName.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -228,13 +240,59 @@ public class ProfilesFragment extends Fragment {
                 .setView(mView)
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        //Verifica se e nulo, vazio ou contém números
                         if (nameRestrictions(mName.getText().toString())){
                             selectedFilterDietList = mDietAdapter.getSelectedItems();
                             selectedFilterIntoleranceList = mIntoleranceAdapter.getSelectedItems();
-                            Diet mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
+                            mDiet = new Diet(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
                             ProfileItem mProfile = new ProfileItem(mName.getText().toString(), mDiet);
-                            ((MainActivity) getActivity()).addProfile(mProfile);
-                            mGrid.setAdapter(mNAdapter);
+
+                            dietDB = new DietDB(mName.getText().toString(), ListToSet(selectedFilterIntoleranceList), ListToSet(selectedFilterDietList), null);
+
+                            ProfileItemDB profileItem = new ProfileItemDB(mName.getText().toString(), dietDB);
+
+                            Log.d(TAG, "id"+ profileItem.getId());
+
+                            if(DBUtils.addProfile(getContext(), profileItem)){
+                                ((MainActivity) getActivity()).addProfile(mProfile);
+                                mGrid.setAdapter(mNAdapter);
+                                Toast.makeText(getContext(), R.string.add_profile, Toast.LENGTH_SHORT).show();
+
+                            } else{
+                                Toast.makeText(getContext(), R.string.error_add_in_DB, Toast.LENGTH_SHORT).show();
+
+                            }
+
+/*
+
+
+                            if (mName.getText().length() != 0){ // will only save if name at least is present
+                                // none of AsyncTask's generic parameters are used
+                                // nothing passed to doInBackground or returned from onPostExecute and no progress tracked
+                                // why? a Save for ADD needs nothing passed and a Save for EDIT uses the class level rowID set in onCreate
+                                AsyncTask<Object, Object, Object> saveProfileTask = new AsyncTask<Object, Object, Object>()
+                                {
+                                    @Override
+                                    protected Object doInBackground(Object... params){
+                                        saveProfile(); // save contact to the database NOT on main/GUI thread
+                                        return null; 	//see notes immediately above
+                                    }
+
+                                }; // end AsyncTask
+
+                                // save the contact to the database using a separate thread
+                                saveProfileTask.execute((Object[]) null);
+                            }
+                            else{
+                                // create a new AlertDialog Builder
+                                //android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext()); // need fully qualified Activity ref since in an inner class
+
+                                // set dialog title & message, and provide Button to dismiss
+                                //builder.setTitle(R.string.errorTitle);
+                                //builder.setMessage(R.string.errorMessage);
+                                //builder.setPositiveButton(R.string.errorButton, null);
+                                //builder.show(); // display the Dialog
+                            } */
                         }
 
                     }
@@ -248,6 +306,7 @@ public class ProfilesFragment extends Fragment {
                 .show();
     }
 
+
     private void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -259,6 +318,28 @@ public class ProfilesFragment extends Fragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+
+    // saves contact information to the database
+    // no parameters required as ADD doesn't need them, and EDIT uses the class level rowID set in onCreate
+    private void saveProfile(){ //NOT on main/GUI thread
+        // get DatabaseConnector to interact with the SQLite database
+        DatabaseConnector databaseConnector = new DatabaseConnector(getContext());
+
+        // db open and close for insert (add) and update (edit) done in called methods in DatabaseConnector class
+        if (getActivity().getIntent().getExtras() == null){  // this is an ADD (_id is an autoincrement field see DatabaseConnector class)
+            databaseConnector.insertProfile(
+                    mName.getText().toString(),
+                    mDiet.dietToString(),
+                    mDiet.intoleranceToString());
+        }
+        else{ 								// this is an EDIT (need to pass a primary key - rowID)
+            databaseConnector.updateProfile((long) checkboxGridView.getAdapter().getItemCount(),
+                    mName.getText().toString(),
+                    mDiet.dietToString(),
+                    mDiet.intoleranceToString());
+        }
+
+    }
 
     private void filterType() {
         mTypeBtn.setOnClickListener(new View.OnClickListener() {

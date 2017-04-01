@@ -13,5 +13,7 @@
     <string name="wait">Wait .....  :)</string>
     <string name="empty_name">Can not add an empty name :(</string>
     <string name="contain_number">The name can not contain numbers</string>
+    <string name="add_profile">Profile added</string>
+    <string name="error_add_in_DB">Ops! something went wrong</string>
 
 </resources>

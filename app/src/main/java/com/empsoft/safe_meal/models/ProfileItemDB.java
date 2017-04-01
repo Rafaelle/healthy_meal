@@ -1,37 +1,47 @@
 package com.empsoft.safe_meal.models;
 
-import java.util.Random;
-
 /**
- * Created by samirsmedeiros on 12/03/17.
+ * Created by Rafaelle on 31/03/2017.
  */
 
-public class ProfileItem {
+import java.util.Random;
+
+import java.util.Random;
+
+public class ProfileItemDB {
     private int id;
     private String name;
-    private Diet diet;
+    private DietDB diet;
 
-    public ProfileItem(String name, Diet diet) {
+    public ProfileItemDB(String name, DietDB diet) {
         this.name = name;
         this.diet = diet;
         final Random randomId = new Random();
         this.id = randomId.nextInt();
     }
 
-    public ProfileItem(String name, Diet diet, int id) {
+    public ProfileItemDB(String name, DietDB diet, int id) {
         this.name = name;
-        this.diet = diet;
+        if (diet == null){
+            this.diet = new DietDB(name);
+        } else {
+            this.diet = diet;
+        }
         this.id = id;
     }
-    public Diet getDiet() {
+    public DietDB getDiet() {
         return diet;
+    }
+
+    public  Diet getDietR(){
+        return new Diet(this.name, diet.getIntolerances(), diet.getDiets(), diet.getExcludeIngredients());
     }
 
     public String getName() {
         return name;
     }
 
-    public void setDiet(Diet diet) {
+    public void setDiet(DietDB diet) {
         this.diet = diet;
     }
 
