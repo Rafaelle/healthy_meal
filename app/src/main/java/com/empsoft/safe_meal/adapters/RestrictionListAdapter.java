@@ -21,17 +21,17 @@ public class RestrictionListAdapter extends RecyclerView.Adapter<RestrictionList
     private final List<String> selectedItems;
     private final Activity activity;
     private List<CheckBox> checkBoxItems;
-    private List<String> filterNames;
-    private FilterItemHolder holder;
+    private boolean isDiet;
 
 
 
-    public RestrictionListAdapter(Activity activity, List<FilterItem> items) {
+    public RestrictionListAdapter(Activity activity, List<FilterItem> items, boolean isDiet) {
         this.items = items;
         selectedItems = new ArrayList<>();
         this.activity = activity;
         checkBoxItems = new ArrayList<>();
-        filterNames = new ArrayList<>();
+        this.isDiet = isDiet;
+
     }
 
     @Override
@@ -42,7 +42,6 @@ public class RestrictionListAdapter extends RecyclerView.Adapter<RestrictionList
     @Override
     public void onBindViewHolder(final FilterItemHolder holder, final int position) {
         View currFilter = ((FilterRestrictionItem) holder.itemView);
-        this.holder = holder;
         ((FilterRestrictionItem) holder.itemView).displayCbox(items.get(position).getIcon());
         ((FilterRestrictionItem) holder.itemView).displayText(items.get(position).getNome());
 
@@ -53,7 +52,7 @@ public class RestrictionListAdapter extends RecyclerView.Adapter<RestrictionList
         checkBoxItems.add(position, checkboxItem);
 
 
-        Log.d("position", String.valueOf(position));
+
 
         checkboxItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -61,7 +60,9 @@ public class RestrictionListAdapter extends RecyclerView.Adapter<RestrictionList
                 if (!checkboxItem.isChecked() && selectedItems.contains(checkboxItem.getText().toString())) {
                     selectedItems.remove(checkboxItem.getText().toString());
                 } else if (checkboxItem.isChecked() && !selectedItems.contains(checkboxItem.getText().toString())) {
+                    if(isDiet)selectedItems.clear();
                     selectedItems.add(checkboxItem.getText().toString());
+                    notifyDataSetChanged();
                 }
             }
         });

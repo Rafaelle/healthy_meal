@@ -205,7 +205,7 @@ public class ProfilesFragment extends Fragment {
             }
         });
 
-        final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList);
+        final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList, true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
@@ -213,7 +213,7 @@ public class ProfilesFragment extends Fragment {
         checkboxDietListView.setLayoutManager(llm);
         checkboxDietListView.setAdapter(mDietAdapter);
 
-        final RestrictionListAdapter mIntoleranceAdapter = new RestrictionListAdapter(getActivity(), filterIntoleranceList);
+        final RestrictionListAdapter mIntoleranceAdapter = new RestrictionListAdapter(getActivity(), filterIntoleranceList,false);
         LinearLayoutManager llm2 = new LinearLayoutManager(getActivity());
         llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
 
