@@ -11,6 +11,7 @@ import android.util.Log;
 import com.empsoft.safe_meal.fragments.ProfilesFragment;
 import com.empsoft.safe_meal.fragments.RecipeDetailsFragment;
 import com.empsoft.safe_meal.fragments.RecipeListFragment;
+import com.empsoft.safe_meal.models.Diet;
 import com.empsoft.safe_meal.models.GeneralRecipe;
 import com.empsoft.safe_meal.models.ProfileItem;
 import com.empsoft.safe_meal.services.retrofit_models.AnalyzedRecipeInstructions;
@@ -64,23 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
         mProfiles = new ArrayList<>(Arrays.asList(
                 //      new ProfileItem("ADD PROFILE", null),
-                new ProfileItem("Samir", null),
-                new ProfileItem("Martha", null),
-                new ProfileItem("Rafaelle", null),
-                new ProfileItem("Luiza", null),
-                new ProfileItem("Igor", null),
-                new ProfileItem("Khelvin", null),
-                new ProfileItem("Maria", null)));
+                new ProfileItem("Samir", new Diet()),
+                new ProfileItem("Martha", new Diet()),
+                new ProfileItem("Rafaelle", new Diet()),
+                new ProfileItem("Luiza", new Diet()),
+                new ProfileItem("Igor", new Diet()),
+                new ProfileItem("Khelvin", new Diet())
+              ));
     }
-
-    /**
-     * Change the current displayed fragment by a new one.
-     * - if the fragment is in backstack, it will pop it
-     * - if the fragment is already displayed (trying to change the fragment with the same), it will not do anything
-     *
-     * @param frag            the new fragment to display
-     * @param saveInBackstack if we want the fragment to be in backstack
-     */
     public void changeFragment(Fragment frag, String tag, boolean saveInBackstack) {
 
         try {

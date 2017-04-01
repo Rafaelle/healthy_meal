@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashSet;
@@ -59,13 +62,40 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ProfileItemHolder holder,  final int position) {
+    public void onBindViewHolder(final ProfileItemHolder holder, final int position) {
 
         View currFilter = ((ProfileViewItem) holder.itemView);
 
         ((ProfileViewItem) holder.itemView).displayName(items.get(position).getName());
         ((ProfileViewItem) holder.itemView).displayCbox("SELECT", false);
+        ImageButton userBtn = ((ProfileViewItem) holder.itemView).getUserbtn();
 
+
+        userBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View mView = View.inflate(activity, R.layout.dialog_profile_info, null);
+                GridView mGridListDiets = (GridView) mView.findViewById(R.id.diet_list);
+                GridView mGridListIntolerances = (GridView) mView.findViewById(R.id.intolerance_list);
+
+                RestrictionAdapter mAdapterDiets = new RestrictionAdapter(activity, getItems(items.get(position).getDiet().getDiet()));
+                RestrictionAdapter mAdapterIntolerances = new RestrictionAdapter(activity, getItems(items.get(position).getDiet().getIntolerances()));
+
+                mGridListDiets.setAdapter(mAdapterDiets);
+                mGridListIntolerances.setAdapter(mAdapterIntolerances);
+
+                new AlertDialog.Builder(holder.itemView.getContext())
+                        .setTitle(holder.tv.getText() + "'s restrictions")
+                        .setView(mView)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.ic_person_pc)
+                        .show();
+            }
+        });
 
         final CheckBox checkboxItem = ((ProfileViewItem) holder.itemView).getCheckBoxItem();
 
@@ -112,6 +142,15 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             cb = ((ProfileViewItem)itemView).getCheckBoxItem();
             tv = ((ProfileViewItem)itemView).getTextViewItem();
         }
+    }
+
+
+    private List<String> getItems(Set<String> items) {
+        List<String> mList = new ArrayList<>();
+        for (String name: items) {
+            mList.add(name);
+        }
+        return mList;
     }
 
 

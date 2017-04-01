@@ -3,6 +3,8 @@ package com.empsoft.safe_meal.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.empsoft.safe_meal.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,11 +21,13 @@ public class Diet implements Parcelable {
     private Set<String> intolerances;
     private Set<String> diet;
     private Set<String> excludeIngredients;
+    private int icon;
 
 
     public Diet( String name, Set<String> intolerances, Set<String> diet, Set<String> excludeIngredients) {
         this.name = name;
         this.intolerances = intolerances;
+        this.icon = icon;
         this.diet = diet;
         this.excludeIngredients = excludeIngredients;
     }
@@ -34,6 +38,12 @@ public class Diet implements Parcelable {
         this.diet = new HashSet<>();
         this.excludeIngredients = new HashSet<>();
 
+    }
+
+    public Diet(){
+        this.intolerances = new HashSet<>();
+        this.diet = new HashSet<>();
+        this.excludeIngredients = new HashSet<>();
     }
 
 
@@ -101,6 +111,10 @@ public class Diet implements Parcelable {
         return str;
     }
 
+    public int getIcon() {
+        return icon;
+    }
+
     public String intoleranceToString(){
         String str = "";
         if (intolerances!=null){
@@ -159,5 +173,24 @@ public class Diet implements Parcelable {
         dest.writeStringList(intolerancesList);
         dest.writeStringList(dietList);
         dest.writeStringList(excludeIngredientsList);
+    }
+
+    public static int getIconByName(String iconName){
+        switch (iconName){
+            case "Dairy": return R.drawable.ic_dairy;
+            case "Egg": return R.drawable.ic_egg;
+            case "Gluten": return R.drawable.ic_gluten;
+            case "Peanut": return R.drawable.ic_peanut;
+            case "Sesame": return R.drawable.ic_sesame;
+            case "Seafood": return R.drawable.ic_seafood;
+            case "Soy": return R.drawable.ic_soy;
+            case "Sulfite": return R.drawable.ic_sulfite;
+            case "Shellfish": return R.drawable.ic_shellfish;
+            case "Tree": return R.drawable.ic_tree;
+            case "Nut": return R.drawable.ic_nut;
+            case "Wheat": return R.drawable.ic_wheat;
+            default: return  R.drawable.ic_diet;
+
+        }
     }
 }
