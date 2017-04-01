@@ -8,6 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_margin="5dp"
+        android:id="@+id/diets_info"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Diets"
@@ -25,6 +26,7 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:id="@+id/intolerances_info"
         android:layout_margin="5dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

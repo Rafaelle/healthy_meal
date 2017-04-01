@@ -3,34 +3,22 @@ package com.empsoft.safe_meal.adapters;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.HashSet;
-
-import com.empsoft.safe_meal.MainActivity;
 import com.empsoft.safe_meal.R;
-import com.empsoft.safe_meal.models.Diet;
-import com.empsoft.safe_meal.models.FilterRestrictionItem;
 import com.empsoft.safe_meal.models.ProfileItem;
-import com.empsoft.safe_meal.models.FilterItem;
 import com.empsoft.safe_meal.models.ProfileViewItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -77,9 +65,18 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 View mView = View.inflate(activity, R.layout.dialog_profile_info, null);
                 GridView mGridListDiets = (GridView) mView.findViewById(R.id.diet_list);
                 GridView mGridListIntolerances = (GridView) mView.findViewById(R.id.intolerance_list);
+                TextView dietsInfo = (TextView) mView.findViewById(R.id.diets_info);
+                TextView intoleracesInfo = (TextView) mView.findViewById(R.id.intolerances_info);
 
-                RestrictionAdapter mAdapterDiets = new RestrictionAdapter(activity, getItems(items.get(position).getDiet().getDiet()));
-                RestrictionAdapter mAdapterIntolerances = new RestrictionAdapter(activity, getItems(items.get(position).getDiet().getIntolerances()));
+
+                RestrictionInfoAdapter mAdapterDiets = new RestrictionInfoAdapter(activity, getItems(items.get(position).getDiet().getDiet()));
+                RestrictionInfoAdapter mAdapterIntolerances = new RestrictionInfoAdapter(activity, getItems(items.get(position).getDiet().getIntolerances()));
+
+                if (getItems(items.get(position).getDiet().getDiet()).size()==0)  dietsInfo.setText("No diet");
+                else dietsInfo.setText("Diet");
+
+                if (getItems(items.get(position).getDiet().getIntolerances()).size()==0)  intoleracesInfo.setText("No intolerances");
+                else intoleracesInfo.setText("Intolerances");
 
                 mGridListDiets.setAdapter(mAdapterDiets);
                 mGridListIntolerances.setAdapter(mAdapterIntolerances);

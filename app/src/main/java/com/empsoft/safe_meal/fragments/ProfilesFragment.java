@@ -183,7 +183,7 @@ public class ProfilesFragment extends Fragment {
         List<String> filterIntoleranceListName = new ArrayList<>(Arrays.asList("Dairy", "Egg",
                 "Gluten", "Peanut", "Sesame", "Seafood", "Shellfish", "Soy", "Sulfite", "Tree", "Nut", "Wheat"));
 
-        List<String> filterDietListName = new ArrayList<>(Arrays.asList("Pescetarian", "Lacto Vegetarian",
+        List<String> filterDietListName = new ArrayList<>(Arrays.asList("Lacto Vegetarian",
                 "Ovo Vegetarian", "Vegan", "Paleo", "Primal", "Vegetarian"));
 
         int[] filterIntoleranceListIcon = new int[]{R.drawable.ic_dairy, R.drawable.ic_egg,
@@ -192,7 +192,7 @@ public class ProfilesFragment extends Fragment {
                 R.drawable.ic_tree, R.drawable.ic_nut, R.drawable.ic_wheat
         };
 
-        int[] filterDietListIcon = new int[]{R.drawable.ic_pescetarian, R.drawable.ic_lacto_vegetarian,
+        int[] filterDietListIcon = new int[]{R.drawable.ic_lacto_vegetarian,
                 R.drawable.ic_ovo_vegetarian, R.drawable.ic_vegan, R.drawable.ic_paleo,
                 R.drawable.ic_primal, R.drawable.ic_vegetarian
         };
@@ -217,7 +217,7 @@ public class ProfilesFragment extends Fragment {
             }
         });
 
-        final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList);
+        final RestrictionListAdapter mDietAdapter = new RestrictionListAdapter(getActivity(), filterDietList, true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
@@ -225,7 +225,7 @@ public class ProfilesFragment extends Fragment {
         checkboxDietListView.setLayoutManager(llm);
         checkboxDietListView.setAdapter(mDietAdapter);
 
-        final RestrictionListAdapter mIntoleranceAdapter = new RestrictionListAdapter(getActivity(), filterIntoleranceList);
+        final RestrictionListAdapter mIntoleranceAdapter = new RestrictionListAdapter(getActivity(), filterIntoleranceList,false);
         LinearLayoutManager llm2 = new LinearLayoutManager(getActivity());
         llm2.setOrientation(LinearLayoutManager.HORIZONTAL);
 

@@ -36,7 +36,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MAIN_ACTIVITY";
-    private static final int numberResult = 5;
+    private static final int numberResult = 10;
     private ProfilesFragment mProfilesFragment;
     private SpoonacularService spoonacularService;
 

@@ -20,19 +20,17 @@ import java.util.List;
 /**
  * Created by samirsmedeiros on 31/03/17.
  */
-    public class RestrictionAdapter extends ArrayAdapter<String> {
+    public class RestrictionInfoAdapter extends ArrayAdapter<String> {
 
         private static final String TAG = "Filter_list_adapter ";
         private final List<String> items;
         private final Activity activity;
-        private List<CheckBox> checkBoxItems;
 
 
-        public RestrictionAdapter(Activity activity, List<String> items) {
+        public RestrictionInfoAdapter(Activity activity, List<String> items) {
             super(activity, android.R.layout.simple_list_item_1, items);
             this.items = items;
             this.activity = activity;
-            checkBoxItems = new ArrayList<>();
         }
 
         @Override
