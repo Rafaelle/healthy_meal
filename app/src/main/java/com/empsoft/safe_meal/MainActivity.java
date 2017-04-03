@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 Integer number, String query, String type*/
         String query = "";
 
-        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getDiets(), getExcludeIngredients(),
+        ComplexSearchMapper complexSearchMapper = new ComplexSearchMapper(getCuisine(),getDiets(), "anchovy",
                 getIntolerances(), numberResult,query, getRecipeFilters());
         //complexSearchMapper.setLimitLicense(false);
         //complexSearchMapper.setNumber(5);

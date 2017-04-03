@@ -362,11 +362,7 @@ public class ProfilesFragment extends Fragment {
 
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        })
                         .setIcon(R.drawable.ic_recipe_black)
                         .show();
             }
@@ -390,11 +386,6 @@ public class ProfilesFragment extends Fragment {
                                 selectedFilterCuisineList = mAdapter.getSelectedItems();
                                 ((MainActivity) getActivity()).setSelectedKitchenFilters(selectedFilterCuisineList);
 
-
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
 
                             }
                         })
